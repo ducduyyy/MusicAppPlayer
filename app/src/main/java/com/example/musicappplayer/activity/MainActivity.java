@@ -1,4 +1,4 @@
-package com.example.musicappplayer;
+package com.example.musicappplayer.activity;
 
 import android.os.Bundle;
 
@@ -8,6 +8,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.musicappplayer.R;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
