@@ -7,13 +7,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.musicappplayer.R;
+import com.example.musicappplayer.adapter.MainViewPagerAdapter;
+import com.example.musicappplayer.fragment.FragmentHome;
+import com.example.musicappplayer.fragment.FragmentSearch;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
     private TabLayout mTablayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,5 +30,23 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        anhxa();
+        innit();
+    }
+
+    private void innit() {
+        MainViewPagerAdapter mainViewPagerAdapter = new MainViewPagerAdapter(getSupportFragmentManager());
+        mainViewPagerAdapter.addFragment(new FragmentHome(),"Home");
+        mainViewPagerAdapter.addFragment(new FragmentSearch(),"Search");
+        viewPager.setAdapter(mainViewPagerAdapter);
+        mTablayout.setupWithViewPager(viewPager);
+        mTablayout.getTabAt(0).setIcon(R.drawable.icontrangchu);
+        mTablayout.getTabAt(1).setIcon(R.drawable.iconsearch);
+    }
+
+    private void anhxa() {
+        mTablayout = findViewById(R.id.myTabLayout);
+        viewPager = findViewById(R.id.myViewpager);
     }
 }

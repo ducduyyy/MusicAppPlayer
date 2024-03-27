@@ -17,7 +17,9 @@
             android:exported="false" />
         <activity
             android:name=".activity.MainActivity"
-            android:exported="false" />
+            android:exported="false" >
+
+        </activity>
         <activity
             android:name=".activity.SignInActivity"
             android:exported="true">

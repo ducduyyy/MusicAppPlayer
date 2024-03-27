@@ -12,18 +12,19 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/myViewpager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-
-
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/myTabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@android:color/transparent"
         app:tabIndicator="@color/SkyBlue"
+        app:tabIndicatorHeight="2dp"
         app:tabMode="fixed"
         app:tabSelectedTextColor="@color/Blue"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        app:tabTextColor="@color/Black" />
 
 </LinearLayout>
