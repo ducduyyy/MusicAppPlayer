@@ -12,6 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.musicappplayer.R;
 import com.example.musicappplayer.adapter.MainViewPagerAdapter;
 import com.example.musicappplayer.fragment.FragmentHome;
+import com.example.musicappplayer.fragment.FragmentInfoUser;
 import com.example.musicappplayer.fragment.FragmentSearch;
 import com.google.android.material.tabs.TabLayout;
 
@@ -39,10 +40,12 @@ public class MainActivity extends AppCompatActivity {
         MainViewPagerAdapter mainViewPagerAdapter = new MainViewPagerAdapter(getSupportFragmentManager());
         mainViewPagerAdapter.addFragment(new FragmentHome(),"Home");
         mainViewPagerAdapter.addFragment(new FragmentSearch(),"Search");
+        mainViewPagerAdapter.addFragment(new FragmentInfoUser(),"info");
         viewPager.setAdapter(mainViewPagerAdapter);
         mTablayout.setupWithViewPager(viewPager);
         mTablayout.getTabAt(0).setIcon(R.drawable.icontrangchu);
         mTablayout.getTabAt(1).setIcon(R.drawable.iconsearch);
+        mTablayout.getTabAt(2).setIcon(R.drawable.ic_launcher_foreground);
     }
 
     private void anhxa() {
