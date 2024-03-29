@@ -61,12 +61,14 @@ public class Fragment_Banner extends Fragment {
                 runnable = new Runnable() {
                     @Override
                     public void run() {
-                              currentItem++;
-                              if(currentItem>viewPager.getAdapter().getCount()){
-                                  currentItem =0;
-                              }
-                              viewPager.setCurrentItem(currentItem,true);
-                              handler.postDelayed(runnable,5000);
+                        if (viewPager.getAdapter()!=null){
+                            currentItem++;
+                            if(currentItem>viewPager.getAdapter().getCount()){
+                                currentItem =0;
+                            }
+                            viewPager.setCurrentItem(currentItem,true);
+                        }
+                        handler.postDelayed(runnable,5000);
                     }
                 };
                 handler.postDelayed(runnable,5000);
