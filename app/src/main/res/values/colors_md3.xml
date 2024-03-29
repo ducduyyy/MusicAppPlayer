@@ -4,4 +4,5 @@
     <color name="elevationOverlayDark">@color/md_grey_500</color>
     <color name="elevationOverlayBlack">@color/md_black_1000</color>
     <color name="elevationOverlay">@color/elevationOverlayLight</color>
+    <color name="elevationOverlay1">@color/elevationOverlayLight</color>
 </resources>
