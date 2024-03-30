@@ -15,5 +15,10 @@
             android:id="@+id/fragmentbanner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+        <fragment
+            android:name="com.example.musicappplayer.fragment.FragmentPlaylist"
+            android:id="@+id/fragmentplaylist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </ScrollView>

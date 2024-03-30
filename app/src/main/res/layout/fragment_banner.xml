@@ -9,7 +9,7 @@
             android:background="@drawable/custom_background_banner"
             android:id="@+id/viewpagerbanner1"
             android:layout_width="match_parent"
-            android:layout_height="200dp">
+            android:layout_height="220dp">
 
         </androidx.viewpager.widget.ViewPager>
     </RelativeLayout>
