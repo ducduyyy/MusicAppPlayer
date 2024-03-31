@@ -9,7 +9,7 @@
         android:id="@+id/imgviewbackgroundplaylist"
         android:scaleType="fitXY"
         android:layout_width="match_parent"
-        android:layout_height="150dp"/>
+        android:layout_height="200dp"/>
     <View
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -27,7 +27,7 @@
         android:scaleType="fitXY"/>
     <TextView
         android:textSize="13sp"
-        android:text="Nhung bai hit cu"
+        android:text="Những Bài Hit Cũ"
         android:layout_alignBottom="@+id/imgviewplaylist"
         android:layout_toRightOf="@+id/imgviewplaylist"
         android:layout_marginLeft="13dp"

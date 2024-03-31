@@ -33,7 +33,7 @@ public class PlaylistAdapter extends ArrayAdapter<Playlist> {
         ViewHolder viewHolder = null;
         if (convertView ==null){
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.dong_playlist,null);
+            convertView = inflater.inflate(R.layout.item_playlist,null);
             viewHolder = new ViewHolder();
             viewHolder.txttenplaylist = convertView.findViewById(R.id.textviewtenplaylist);
             viewHolder.imgplaylist = convertView.findViewById(R.id.imgviewplaylist);
