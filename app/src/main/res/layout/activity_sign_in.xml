@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background_img"
+    android:background="@drawable/background_login"
     tools:context=".activity.SignInActivity">
 
     <TextView
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="SignIn"
-        android:textColor="@color/DarkBlue"
+        android:textColor="@color/SkyBlue"
         android:textSize="70dp"
         android:paddingStart="20dp"
         android:paddingTop="25dp"
