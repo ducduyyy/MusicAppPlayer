@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/custom_background_banner">
+
+    <ImageView
+        android:id="@+id/imgviewSongHot"
+        android:scaleType="fitXY"
+        android:layout_margin="3dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"/>
+
+    <TextView
+        android:text="Ten bai hat"
+        android:textSize="18sp"
+        android:textColor="@color/Black"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_toRightOf="@id/imgviewSongHot"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="8dp"
+        android:id="@+id/textviewTenbaihat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/textviewTencasi"
+        android:textColor="@color/White"
+        android:textSize="17sp"
+        android:text="Ca Si"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_toRightOf="@id/imgviewSongHot"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="6dp"
+        android:layout_below="@id/textviewTenbaihat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <ImageView
+        android:layout_marginRight="10dp"
+        android:src="@drawable/ic_favorite_border"
+        android:id="@+id/imgviewluotthich"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_width="30dp"
+        android:layout_height="30dp"/>
+</RelativeLayout>
