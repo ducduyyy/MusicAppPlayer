@@ -1,6 +1,7 @@
 package com.example.musicappplayer.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
 import com.example.musicappplayer.R;
+import com.example.musicappplayer.activity.ListSongActivity;
 import com.example.musicappplayer.model.Banner;
 import com.squareup.picasso.Picasso;
 
@@ -58,6 +60,12 @@ public class BannerAdapter extends PagerAdapter {
         txtViewsongbanner.setText(bannerArrayList.get(position).getTenBaiHat());
         txtViewinfobanner.setText(bannerArrayList.get(position).getNoiDung());
         container.addView(view);
+
+        view.setOnClickListener(v->{
+            Intent intent = new Intent(context, ListSongActivity.class);
+            intent.putExtra("banner", bannerArrayList.get(position));
+            context.startActivity(intent);
+        });
         return view;
     }
 

@@ -1,5 +1,6 @@
 package com.example.musicappplayer.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.google.gson.annotations.Expose;
@@ -8,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 import javax.annotation.processing.Generated;
 
 @Generated("jsonschema2pojo")
-public class ChudeVaTheLoai {
+public class ChudeVaTheLoai{
 
 @SerializedName("TheLoai")
 @Expose

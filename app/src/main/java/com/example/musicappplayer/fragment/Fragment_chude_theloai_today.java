@@ -1,5 +1,6 @@
 package com.example.musicappplayer.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.example.musicappplayer.R;
+import com.example.musicappplayer.activity.ListSongActivity;
 import com.example.musicappplayer.model.ChuDe;
 import com.example.musicappplayer.model.ChudeVaTheLoai;
 import com.example.musicappplayer.model.TheLoai;
@@ -96,6 +98,12 @@ public class Fragment_chude_theloai_today extends Fragment {
                     cardView.setLayoutParams(layoutParams);
                     cardView.addView(imageView);
                     linearLayout.addView(cardView);
+                    int finalJ = j;
+                    imageView.setOnClickListener(v->{
+                        Intent intent = new Intent(getActivity(), ListSongActivity.class);
+                        intent.putExtra("idtheloai", theLoaiArrayList.get(finalJ));
+                        startActivity(intent);
+                    });
                 }
                 horizontalScrollView.addView(linearLayout);
             }

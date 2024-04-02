@@ -1,10 +1,12 @@
 package com.example.musicappplayer.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -14,6 +16,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.musicappplayer.R;
+import com.example.musicappplayer.activity.ListPlaylistActivity;
+import com.example.musicappplayer.activity.ListSongActivity;
 import com.example.musicappplayer.adapter.PlaylistAdapter;
 import com.example.musicappplayer.model.Playlist;
 import com.example.musicappplayer.service.APIService;
@@ -39,6 +43,10 @@ public class FragmentPlaylist extends Fragment {
         view = inflater.inflate(R.layout.fragment_playlist,container,false);
         GetData();
         anhxa();
+        txtviewmoreplaylist.setOnClickListener(v->{
+            Intent intent = new Intent(getActivity(), ListPlaylistActivity.class);
+            startActivity(intent);
+        });
         return view;
     }
 
@@ -58,6 +66,14 @@ public class FragmentPlaylist extends Fragment {
                 playlistAdapter = new PlaylistAdapter(getActivity(), android.R.layout.simple_list_item_1,playlists);
                 lvplaylist.setAdapter(playlistAdapter);
                 setListViewHeightBasedOnItems(lvplaylist);
+                lvplaylist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Intent intent = new Intent(getActivity(), ListSongActivity.class);
+                        intent.putExtra("itemplaylist", playlists.get(position));
+                        startActivity(intent);
+                    }
+                });
             }
 
             @Override

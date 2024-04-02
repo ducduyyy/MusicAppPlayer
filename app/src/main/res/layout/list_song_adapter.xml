@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:elevation="5dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_margin="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textviewlistindex"
+            android:text="1"
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/textviewsongname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="250dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:layout_toRightOf="@+id/textviewlistindex"
+            android:textColor="#030303"
+            android:text="Tên ca khúc"
+            android:textSize="20sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textviewsingername"
+            android:layout_below="@+id/textviewsongname"
+            android:layout_toRightOf="@+id/textviewlistindex"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="#979797"
+            android:textSize="20sp"
+            android:text="Ca sĩ"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/imageviewluotthichlistsong"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/ic_favorite"/>
+
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
