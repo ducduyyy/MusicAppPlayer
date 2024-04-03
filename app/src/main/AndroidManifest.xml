@@ -21,6 +21,12 @@
             android:name=".activity.DanhsachtatccachudeActivity"
             android:exported="false" />
         <activity
+            android:name=".activity.ListPlaylistActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ListSongActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.SignUpActivity"
             android:exported="false" />
         <activity

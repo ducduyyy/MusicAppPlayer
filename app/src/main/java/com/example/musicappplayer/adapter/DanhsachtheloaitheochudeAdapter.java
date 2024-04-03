@@ -1,6 +1,7 @@
 package com.example.musicappplayer.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musicappplayer.R;
 import com.example.musicappplayer.activity.DanhsachtheloaitheochudeActivity;
+import com.example.musicappplayer.activity.ListSongActivity;
 import com.example.musicappplayer.model.TheLoai;
 import com.squareup.picasso.Picasso;
 
@@ -55,7 +57,14 @@ public class DanhsachtheloaitheochudeAdapter extends RecyclerView.Adapter<Danhsa
             super(itemView);
             imghinhnen =itemView.findViewById(R.id.imageviewtheloaitheochude);
             txttentheloai = itemView.findViewById(R.id.textviewtentheloaitheochude);
-
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ListSongActivity.class);
+                    intent.putExtra("idtheloai", theLoaiArrayList.get(getPosition()));
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }
