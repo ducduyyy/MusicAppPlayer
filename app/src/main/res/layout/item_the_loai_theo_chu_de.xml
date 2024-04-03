@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="5dp"
+    android:layout_margin="5dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <FrameLayout
+            android:id="@+id/framelayouttheloaitheochude"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@drawable/ic_app_shortcut_background"
+                android:id="@+id/imageviewtheloaitheochude"
+                android:scaleType="centerCrop"
+                android:layout_width="180dp"
+                android:layout_height="180dp">
+
+            </ImageView>
+        </FrameLayout>
+        <TextView
+            android:textSize="15dp"
+            android:textColor="#000000"
+            android:text="Nhac viet cua Nah"
+            android:maxWidth="200dp"
+            android:lines="1"
+            android:gravity="left"
+            android:id="@+id/textviewtentheloaitheochude"
+            android:ellipsize="end"
+            android:paddingTop="5dp"
+            android:paddingRight="5dp"
+            android:paddingLeft="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:text="various Artisis"
+            android:textSize="13dp"
+            android:paddingTop="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TextView>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
