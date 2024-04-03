@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MusicAppPlayer</string>
+    <string name="title_activity_danhsachtatcachude">DanhsachtatcachudeActivity</string>
 </resources>
