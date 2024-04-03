@@ -2,9 +2,11 @@ package com.example.musicappplayer.service;
 
 import com.example.musicappplayer.model.Album;
 import com.example.musicappplayer.model.Banner;
+import com.example.musicappplayer.model.ChuDe;
 import com.example.musicappplayer.model.ChudeVaTheLoai;
 import com.example.musicappplayer.model.Playlist;
 import com.example.musicappplayer.model.SongHot;
+import com.example.musicappplayer.model.TheLoai;
 
 import java.util.List;
 
@@ -42,4 +44,9 @@ public interface Dataservice {
     @FormUrlEncoded
     @POST("danhsachbaihat.php")
     Call<List<SongHot>> GetlistsongbyTheloai(@Field("idtheloai") String idtheloai);
+    @GET("tatcachude.php")
+    Call<List<ChuDe>> GetAllChuDe();
+    @FormUrlEncoded
+    @POST("theloaitheochude.php")
+    Call<List<TheLoai>> GetTheloaitheochude(@Field("idchude") String idchude);
 }

@@ -15,6 +15,12 @@
         android:theme="@style/Theme.MusicAppPlayer"
         tools:targetApi="31">
         <activity
+            android:name=".activity.DanhsachtheloaitheochudeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.DanhsachtatccachudeActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.ListPlaylistActivity"
             android:exported="false" />
         <activity
