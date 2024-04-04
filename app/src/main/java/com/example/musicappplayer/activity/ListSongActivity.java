@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musicappplayer.R;
 import com.example.musicappplayer.adapter.ListSongAdapter;
+import com.example.musicappplayer.model.Album;
 import com.example.musicappplayer.model.Banner;
 import com.example.musicappplayer.model.Playlist;
 import com.example.musicappplayer.model.SongHot;
@@ -52,7 +53,7 @@ public class ListSongActivity extends AppCompatActivity {
     ListSongAdapter listSongAdapter;
     Playlist playlist;
     TheLoai theLoai;
-
+    Album album;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +91,33 @@ public class ListSongActivity extends AppCompatActivity {
             }
             GetDataTheloai(theLoai.getIdTheLoai());
         }
+        if (album != null && !album.getTenAlbum().equals("")){
+            try {
+                setValueInView(album.getTenAlbum(),album.getHinhAlbum());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            GetDataAlbum(album.getIdalbum());
+        }
+    }
+
+    private void GetDataAlbum(String idalbum) {
+        Dataservice dataservice = APIService.getService();
+        Call<List<SongHot>> callbcak = dataservice.GetDanhsachbaihattheoalbum(idalbum);
+        callbcak.enqueue(new Callback<List<SongHot>>() {
+            @Override
+            public void onResponse(Call<List<SongHot>> call, Response<List<SongHot>> response) {
+                mangbaihat = (ArrayList<SongHot>) response.body();
+                listSongAdapter = new ListSongAdapter(ListSongActivity.this, mangbaihat);
+                recyclerViewlistsong.setLayoutManager(new LinearLayoutManager(ListSongActivity.this));
+                recyclerViewlistsong.setAdapter(listSongAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<SongHot>> call, Throwable t) {
+
+            }
+        });
     }
 
     private void GetDataTheloai(String idtheLoai) {
@@ -195,6 +223,9 @@ public class ListSongActivity extends AppCompatActivity {
             }
             if (intent.hasExtra("idtheloai")){
                 theLoai =(TheLoai) intent.getSerializableExtra("idtheloai");
+            }
+            if(intent.hasExtra("album")){
+                album = (Album) intent.getSerializableExtra("album");
             }
         }
     }
