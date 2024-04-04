@@ -16,54 +16,48 @@ import com.example.musicappplayer.activity.ListSongActivity;
 import com.example.musicappplayer.model.Album;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
-public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.ViewHolder> {
+public class AllAlbumAdapter extends  RecyclerView.Adapter<AllAlbumAdapter.ViewHolder> {
     Context context;
     ArrayList<Album> albumArrayList;
-
-    public AlbumAdapter(Context context, ArrayList<Album> albumArrayList) {
+    public AllAlbumAdapter(Context context,ArrayList<Album> albumArrayList){
         this.context = context;
         this.albumArrayList = albumArrayList;
     }
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //gắn layout vào
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.item_album,parent,false);
+        View view = inflater.inflate(R.layout.item_all_album,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        //gán giá trị vao item
         Album album = albumArrayList.get(position);
-        holder.txtCasiAlbum.setText(album.getTenCASiAlbum());
-        holder.txtTenAlbum.setText(album.getTenAlbum());
         Picasso.get()
                 .load(album.getHinhAlbum())
-                .into(holder.imgAlbum);
-
+                .into(holder.imgallalvum);
+        holder.txttenallalbum.setText(album.getTenAlbum());
     }
 
     @Override
     public int getItemCount() {
-        //số item trong recyclerView
         return albumArrayList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        ImageView imgAlbum;
-        TextView txtTenAlbum, txtCasiAlbum;
+        ImageView imgallalvum;
+        TextView txttenallalbum;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            imgAlbum = itemView.findViewById(R.id.imgviewAlbum);
-            txtTenAlbum = itemView.findViewById(R.id.textviewTenAlbum);
-            txtCasiAlbum = itemView.findViewById(R.id.textviewTenCaSiAlbum);
-            itemView .setOnClickListener(new View.OnClickListener() {
+            imgallalvum = itemView.findViewById(R.id.imageviewallalbum);
+            txttenallalbum = itemView.findViewById(R.id.textviewtenallalbum);
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context, ListSongActivity.class);

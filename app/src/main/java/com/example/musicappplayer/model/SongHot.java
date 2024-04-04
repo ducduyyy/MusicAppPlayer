@@ -1,13 +1,18 @@
 package com.example.musicappplayer.model;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import javax.annotation.processing.Generated;
 
 @Generated("jsonschema2pojo")
-public class SongHot {
+public class SongHot{
 
 @SerializedName("IdBaiHat")
 @Expose
