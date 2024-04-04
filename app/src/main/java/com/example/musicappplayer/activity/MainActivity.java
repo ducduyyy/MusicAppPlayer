@@ -14,7 +14,6 @@ import com.example.musicappplayer.adapter.MainViewPagerAdapter;
 import com.example.musicappplayer.fragment.FragmentHome;
 import com.example.musicappplayer.fragment.FragmentInfoUser;
 import com.example.musicappplayer.fragment.FragmentSearch;
-import com.example.musicappplayer.fragment.FragmentSetting;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,14 +40,12 @@ public class MainActivity extends AppCompatActivity {
         MainViewPagerAdapter mainViewPagerAdapter = new MainViewPagerAdapter(getSupportFragmentManager());
         mainViewPagerAdapter.addFragment(new FragmentHome(),"Home");
         mainViewPagerAdapter.addFragment(new FragmentSearch(),"Search");
-        mainViewPagerAdapter.addFragment(new FragmentInfoUser(),"Account");
-        mainViewPagerAdapter.addFragment(new FragmentSetting(),"Setting");
+        mainViewPagerAdapter.addFragment(new FragmentInfoUser(),"Menu");
         viewPager.setAdapter(mainViewPagerAdapter);
         mTablayout.setupWithViewPager(viewPager);
         mTablayout.getTabAt(0).setIcon(R.drawable.ic_home);
         mTablayout.getTabAt(1).setIcon(R.drawable.ic_search);
-        mTablayout.getTabAt(2).setIcon(R.drawable.ic_account);
-        mTablayout.getTabAt(3).setIcon(R.drawable.ic_settings);
+        mTablayout.getTabAt(2).setIcon(R.drawable.ic_storage);
     }
 
     private void anhxa() {

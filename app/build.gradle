@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.androidApplication)
     id 'com.google.gms.google-services'
-    alias(libs.plugins.jetbrainsKotlinAndroid)
 }
 
 android {
@@ -31,9 +30,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
+
     buildFeatures {
         compose true
     }
@@ -82,6 +79,8 @@ dependencies {
     // Add the dependency for the Realtime Database library
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-database")
+    //
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     androidTestImplementation platform(libs.compose.bom)
     androidTestImplementation libs.ui.test.junit4
     debugImplementation libs.ui.tooling
