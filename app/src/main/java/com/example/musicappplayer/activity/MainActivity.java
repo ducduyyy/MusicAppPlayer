@@ -40,12 +40,12 @@ public class MainActivity extends AppCompatActivity {
         MainViewPagerAdapter mainViewPagerAdapter = new MainViewPagerAdapter(getSupportFragmentManager());
         mainViewPagerAdapter.addFragment(new FragmentHome(),"Home");
         mainViewPagerAdapter.addFragment(new FragmentSearch(),"Search");
-        mainViewPagerAdapter.addFragment(new FragmentInfoUser(),"Account");
+        mainViewPagerAdapter.addFragment(new FragmentInfoUser(),"Menu");
         viewPager.setAdapter(mainViewPagerAdapter);
         mTablayout.setupWithViewPager(viewPager);
         mTablayout.getTabAt(0).setIcon(R.drawable.ic_home);
         mTablayout.getTabAt(1).setIcon(R.drawable.ic_search);
-        mTablayout.getTabAt(2).setIcon(R.drawable.ic_account);
+        mTablayout.getTabAt(2).setIcon(R.drawable.ic_storage);
     }
 
     private void anhxa() {

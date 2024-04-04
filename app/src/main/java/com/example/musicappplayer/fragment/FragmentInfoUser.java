@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.musicappplayer.R;
 import com.example.musicappplayer.activity.SignInActivity;
@@ -28,7 +31,7 @@ public class FragmentInfoUser extends Fragment {
     TextView txtname,txtdangxuat;
 
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+    FirebaseUser firebaseUser;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -36,6 +39,8 @@ public class FragmentInfoUser extends Fragment {
         linearLayout_welcome = view.findViewById(R.id.linear_welcome);
         txtname = view.findViewById(R.id.textview_name);
         txtdangxuat = view.findViewById(R.id.textview_dangxuat);
+        Log.d("create", "onCreateView ");
+        firebaseUser = firebaseAuth.getCurrentUser();
         linearLayout_welcome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,14 +78,12 @@ public class FragmentInfoUser extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("Thông báo")
                         .setMessage("Bạn có chắc chắn muốn đăng xuất?")
-                        .setPositiveButton("Đăng xuất", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                firebaseAuth.signOut();
-                                Toast.makeText(getActivity(), "Đã đăng xuất!", Toast.LENGTH_SHORT).show();
-                                txtname.setText("Đăng nhập/Đăng ký");
-                                dialog.dismiss();
-                            }
+                        .setPositiveButton("Đăng xuất", (dialog, which) -> {
+                            firebaseAuth.signOut();
+                            onResume();
+                            Toast.makeText(getActivity(), "Đã đăng xuất!", Toast.LENGTH_SHORT).show();
+                            dialog.dismiss();
+
                         })
                         .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
                             @Override
@@ -95,10 +98,11 @@ public class FragmentInfoUser extends Fragment {
         return view;
 
     }
-
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("create", "onResume ");
+        firebaseUser = firebaseAuth.getCurrentUser();
         if (firebaseUser !=null){
             String name = firebaseUser.getDisplayName();
             txtname.setText(name);
@@ -106,11 +110,7 @@ public class FragmentInfoUser extends Fragment {
         else {
             txtname.setText("Đăng nhập/Đăng ký");
         }
+
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        onResume();
-    }
 }

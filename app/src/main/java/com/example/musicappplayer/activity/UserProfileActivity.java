@@ -48,7 +48,6 @@ public class UserProfileActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        init();
         anhxa();
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
@@ -62,18 +61,10 @@ public class UserProfileActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("Profile");
+        toolbar.setNavigationOnClickListener(v->finish());
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.toolbar_user_profile){
-            onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     private void showUserProfile(FirebaseUser firebaseUser) {
         String userID = firebaseUser.getUid();
@@ -107,10 +98,6 @@ public class UserProfileActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
             }
         });
-    }
-    private void init(){
-
-
     }
 
     private void anhxa() {
