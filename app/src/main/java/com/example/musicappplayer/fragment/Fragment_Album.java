@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musicappplayer.R;
+import com.example.musicappplayer.activity.DanhsachtatcaAlbumActivity;
 import com.example.musicappplayer.adapter.AlbumAdapter;
 import com.example.musicappplayer.model.Album;
 import com.example.musicappplayer.service.APIService;
@@ -36,8 +37,16 @@ public class Fragment_Album extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_album,container,false);
-        getData();
         anhxa();
+        txtxemthemalbum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), DanhsachtatcaAlbumActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        getData();
         return view;
     }
 
