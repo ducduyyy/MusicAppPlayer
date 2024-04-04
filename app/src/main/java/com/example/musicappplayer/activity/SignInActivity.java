@@ -3,6 +3,7 @@ package com.example.musicappplayer.activity;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -22,6 +23,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.musicappplayer.R;
+import com.example.musicappplayer.fragment.FragmentInfoUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -98,8 +100,7 @@ public class SignInActivity extends AppCompatActivity {
                             FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 //                            if (firebaseUser.isEmailVerified()){
                                 Toast.makeText(SignInActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(SignInActivity.this,UserProfileActivity.class);
-                                startActivity(intent);
+                                finish();
 //                            }else {
 //                                firebaseUser.sendEmailVerification();
 //                                firebaseAuth.signOut();
