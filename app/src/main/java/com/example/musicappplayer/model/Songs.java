@@ -12,7 +12,7 @@ import com.google.gson.annotations.SerializedName;
 import javax.annotation.processing.Generated;
 
 @Generated("jsonschema2pojo")
-public class SongHot{
+public class Songs implements Parcelable{
 
 @SerializedName("IdBaiHat")
 @Expose
@@ -113,5 +113,59 @@ return luotThich;
 public void setLuotThich(String luotThich) {
 this.luotThich = luotThich;
 }
+
+    public Songs(String idBaiHat, String idAlbum, String idTheLoai, String idPlayList, String tenBaiHat, String hinhBaiHat, String casi, String linkBaiHat, String luotThich) {
+        this.idBaiHat = idBaiHat;
+        this.idAlbum = idAlbum;
+        this.idTheLoai = idTheLoai;
+        this.idPlayList = idPlayList;
+        this.tenBaiHat = tenBaiHat;
+        this.hinhBaiHat = hinhBaiHat;
+        this.casi = casi;
+        this.linkBaiHat = linkBaiHat;
+        this.luotThich = luotThich;
+    }
+    protected Songs(Parcel in){
+        idBaiHat = in.readString();
+       idAlbum = in.readString();
+        idTheLoai = in.readString();
+        idPlayList = in.readString();
+        tenBaiHat = in.readString();
+        hinhBaiHat = in.readString();
+        casi = in.readString();
+        linkBaiHat = in.readString();
+        luotThich = in.readString();
+
+    }
+    public static final Creator<Songs> CREATOR = new Creator<Songs>() {
+        @Override
+        public Songs createFromParcel(Parcel in) {
+            return new Songs(in);
+        }
+
+        @Override
+        public Songs[] newArray(int size) {
+            return new Songs[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+
+        dest.writeString(idBaiHat);
+        dest.writeString(idAlbum);
+        dest.writeString(idTheLoai);
+        dest.writeString(idPlayList);
+        dest.writeString(tenBaiHat);
+        dest.writeString(hinhBaiHat);
+        dest.writeString(casi);
+        dest.writeString(linkBaiHat);
+        dest.writeString(luotThich);
+    }
 
 }
