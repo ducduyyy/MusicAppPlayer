@@ -2,14 +2,19 @@ package com.example.musicappplayer.service;
 
 import com.example.musicappplayer.model.Album;
 import com.example.musicappplayer.model.Banner;
+import com.example.musicappplayer.model.ChuDe;
 import com.example.musicappplayer.model.ChudeVaTheLoai;
 import com.example.musicappplayer.model.Playlist;
-import com.example.musicappplayer.model.SongHot;
+import com.example.musicappplayer.model.Songs;
+import com.example.musicappplayer.model.TheLoai;
 
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 
 public interface Dataservice {
     @GET("songbanner.php")
@@ -23,22 +28,22 @@ public interface Dataservice {
     Call<List<Album>> getAlbumhot();
 
     @GET("baihatyeuthich.php")
-    Call<List<SongHot>> getSongs();
+    Call<List<Songs>> getSongs();
 
     @FormUrlEncoded
     @POST("danhsachbaihat.php")
-    Call<List<SongHot>> Getlistsongbybanner(@Field("idquangcao") String idquangcao);
+    Call<List<Songs>> Getlistsongbybanner(@Field("idquangcao") String idquangcao);
 
     @FormUrlEncoded
     @POST("danhsachbaihat.php")
-    Call<List<SongHot>> Getlistsongbyplaylist(@Field("idplaylist") String idplaylist);
+    Call<List<Songs>> Getlistsongbyplaylist(@Field("idplaylist") String idplaylist);
 
     @GET("danhsachplaylist.php")
     Call<List<Playlist>> Getlistplaylist();
 
     @FormUrlEncoded
     @POST("danhsachbaihat.php")
-    Call<List<SongHot>> GetlistsongbyTheloai(@Field("idtheloai") String idtheloai);
+    Call<List<Songs>> GetlistsongbyTheloai(@Field("idtheloai") String idtheloai);
     @GET("tatcachude.php")
     Call<List<ChuDe>> GetAllChuDe();
     @FormUrlEncoded
@@ -50,7 +55,7 @@ public interface Dataservice {
 
     @FormUrlEncoded
     @POST("danhsachbaihat.php")
-    Call<List<SongHot>> GetDanhsachbaihattheoalbum(@Field("idalbum") String idalbum);
+    Call<List<Songs>> GetDanhsachbaihattheoalbum(@Field("idalbum") String idalbum);
 
     @FormUrlEncoded
     @POST("updateluotthich.php")
