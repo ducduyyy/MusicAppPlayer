@@ -2,10 +2,11 @@ package com.example.musicappplayer.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.view.View;
 import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
@@ -23,7 +24,7 @@ import com.example.musicappplayer.adapter.ListSongAdapter;
 import com.example.musicappplayer.model.Album;
 import com.example.musicappplayer.model.Banner;
 import com.example.musicappplayer.model.Playlist;
-import com.example.musicappplayer.model.SongHot;
+import com.example.musicappplayer.model.Songs;
 import com.example.musicappplayer.model.TheLoai;
 import com.example.musicappplayer.service.APIService;
 import com.example.musicappplayer.service.Dataservice;
@@ -32,7 +33,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +49,7 @@ public class ListSongActivity extends AppCompatActivity {
     RecyclerView recyclerViewlistsong;
     FloatingActionButton floatingActionButtonlistsong;
     ImageView imageViewlistsong;
-    ArrayList<SongHot> mangbaihat;
+    ArrayList<Songs> mangbaihat;
     ListSongAdapter listSongAdapter;
     Playlist playlist;
     TheLoai theLoai;
@@ -59,13 +59,15 @@ public class ListSongActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_list_song);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
         DataIntent();
-        anhxa();
+        mapping();
         init();
         if (banner != null && !banner.getTenBaiHat().isEmpty()){
             try {
@@ -103,18 +105,19 @@ public class ListSongActivity extends AppCompatActivity {
 
     private void GetDataAlbum(String idalbum) {
         Dataservice dataservice = APIService.getService();
-        Call<List<SongHot>> callbcak = dataservice.GetDanhsachbaihattheoalbum(idalbum);
-        callbcak.enqueue(new Callback<List<SongHot>>() {
+        Call<List<Songs>> callbcak = dataservice.GetDanhsachbaihattheoalbum(idalbum);
+        callbcak.enqueue(new Callback<List<Songs>>() {
             @Override
-            public void onResponse(Call<List<SongHot>> call, Response<List<SongHot>> response) {
-                mangbaihat = (ArrayList<SongHot>) response.body();
+            public void onResponse(Call<List<Songs>> call, Response<List<Songs>> response) {
+                mangbaihat = (ArrayList<Songs>) response.body();
                 listSongAdapter = new ListSongAdapter(ListSongActivity.this, mangbaihat);
                 recyclerViewlistsong.setLayoutManager(new LinearLayoutManager(ListSongActivity.this));
                 recyclerViewlistsong.setAdapter(listSongAdapter);
+                eventClick();
             }
 
             @Override
-            public void onFailure(Call<List<SongHot>> call, Throwable t) {
+            public void onFailure(Call<List<Songs>> call, Throwable t) {
 
             }
         });
@@ -122,18 +125,19 @@ public class ListSongActivity extends AppCompatActivity {
 
     private void GetDataTheloai(String idtheLoai) {
         Dataservice dataservice = APIService.getService();
-        Call<List<SongHot>> callback = dataservice.GetlistsongbyTheloai(idtheLoai);
-        callback.enqueue(new Callback<List<SongHot>>() {
+        Call<List<Songs>> callback = dataservice.GetlistsongbyTheloai(idtheLoai);
+        callback.enqueue(new Callback<List<Songs>>() {
             @Override
-            public void onResponse(Call<List<SongHot>> call, Response<List<SongHot>> response) {
-                mangbaihat = (ArrayList<SongHot>) response.body();
+            public void onResponse(Call<List<Songs>> call, Response<List<Songs>> response) {
+                mangbaihat = (ArrayList<Songs>) response.body();
                 listSongAdapter = new ListSongAdapter(ListSongActivity.this, mangbaihat);
                 recyclerViewlistsong.setLayoutManager(new LinearLayoutManager(ListSongActivity.this));
                 recyclerViewlistsong.setAdapter(listSongAdapter);
+                eventClick();
             }
 
             @Override
-            public void onFailure(Call<List<SongHot>> call, Throwable t) {
+            public void onFailure(Call<List<Songs>> call, Throwable t) {
 
             }
         });
@@ -142,18 +146,19 @@ public class ListSongActivity extends AppCompatActivity {
 
     private void GetDataPlaylist(String idPlayList) {
         Dataservice dataservice = APIService.getService();
-        Call<List<SongHot>> callback = dataservice.Getlistsongbyplaylist(idPlayList);
-        callback.enqueue(new Callback<List<SongHot>>() {
+        Call<List<Songs>> callback = dataservice.Getlistsongbyplaylist(idPlayList);
+        callback.enqueue(new Callback<List<Songs>>() {
             @Override
-            public void onResponse(Call<List<SongHot>> call, Response<List<SongHot>> response) {
-                mangbaihat = (ArrayList<SongHot>) response.body();
+            public void onResponse(Call<List<Songs>> call, Response<List<Songs>> response) {
+                mangbaihat = (ArrayList<Songs>) response.body();
                 listSongAdapter = new ListSongAdapter(ListSongActivity.this, mangbaihat);
                 recyclerViewlistsong.setLayoutManager(new LinearLayoutManager(ListSongActivity.this));
                 recyclerViewlistsong.setAdapter(listSongAdapter);
+                eventClick();
             }
 
             @Override
-            public void onFailure(Call<List<SongHot>> call, Throwable t) {
+            public void onFailure(Call<List<Songs>> call, Throwable t) {
 
             }
         });
@@ -179,18 +184,19 @@ public class ListSongActivity extends AppCompatActivity {
 
     private void GetDataBanner(String idbanner) {
         Dataservice dataservice = APIService.getService();
-        Call<List<SongHot>> callback = dataservice.Getlistsongbybanner(idbanner);
-        callback.enqueue(new Callback<List<SongHot>>() {
+        Call<List<Songs>> callback = dataservice.Getlistsongbybanner(idbanner);
+        callback.enqueue(new Callback<List<Songs>>() {
             @Override
-            public void onResponse(Call<List<SongHot>> call, Response<List<SongHot>> response) {
-                mangbaihat = (ArrayList<SongHot>) response.body();
+            public void onResponse(Call<List<Songs>> call, Response<List<Songs>> response) {
+                mangbaihat = (ArrayList<Songs>) response.body();
                 listSongAdapter = new ListSongAdapter(ListSongActivity.this, mangbaihat);
                 recyclerViewlistsong.setLayoutManager(new LinearLayoutManager(ListSongActivity.this));
                 recyclerViewlistsong.setAdapter(listSongAdapter);
+                eventClick();
             }
 
             @Override
-            public void onFailure(Call<List<SongHot>> call, Throwable t) {
+            public void onFailure(Call<List<Songs>> call, Throwable t) {
 
             }
         });
@@ -202,14 +208,16 @@ public class ListSongActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(v->finish());
         collapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);
         collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
+        floatingActionButtonlistsong.setEnabled(false);
     }
 
-    private void anhxa() {
+    private void mapping() {
         coordinatorLayout = findViewById(R.id.main);
         collapsingToolbarLayout = findViewById(R.id.collapsingtoolbar);
         toolbar = findViewById(R.id.toolbarlistsong);
         recyclerViewlistsong = findViewById(R.id.recyclerviewlistsong);
         imageViewlistsong = findViewById(R.id.imageviewlistsong);
+        floatingActionButtonlistsong = findViewById(R.id.floatingactionbutton);
     }
 
     private void DataIntent() {
@@ -228,5 +236,17 @@ public class ListSongActivity extends AppCompatActivity {
                 album = (Album) intent.getSerializableExtra("album");
             }
         }
+    }
+    private void eventClick(){
+        floatingActionButtonlistsong.setEnabled(true);
+        floatingActionButtonlistsong.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListSongActivity.this, PlayNhacActivity.class);
+                intent.putExtra("listsong",mangbaihat);
+                startActivity(intent);
+            }
+        });
+
     }
 }

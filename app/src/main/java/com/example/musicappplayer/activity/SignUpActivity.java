@@ -69,7 +69,7 @@ public class SignUpActivity extends AppCompatActivity {
             return insets;
         });
 
-        anhxa();
+        mapping();
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -227,7 +227,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
     }
 
-    private void anhxa() {
+    private void mapping() {
         editTextEmail = findViewById(R.id.edt_signUp_email);
         editTextFullname = findViewById(R.id.edt_signUp_fullname);
         editTextDoB = findViewById(R.id.edt_signUp_birthday);

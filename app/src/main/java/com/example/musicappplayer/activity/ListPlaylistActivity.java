@@ -40,7 +40,7 @@ public class ListPlaylistActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        anhxa();
+        mapping();
         init();
         GetData();
     }
@@ -72,7 +72,7 @@ public class ListPlaylistActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(v->finish());
     }
 
-    private void anhxa() {
+    private void mapping() {
         toolbar = findViewById(R.id.toolbarlistplaylist);
         recyclerViewlistplaylist = findViewById(R.id.recyclerviewlistplaylist);
     }

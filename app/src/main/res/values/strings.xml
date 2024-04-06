@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">MusicAppPlayer</string>
     <string name="title_activity_danhsachtatcachude">DanhsachtatcachudeActivity</string>
+    <string name="single">---</string>
+    <string name="runtime">--:--</string>
+    <string name="totaltime">--:--</string>
+    <string name="title">------</string>
+    <string name="random">TODO</string>
+    <string name="playorpause">TODO</string>
+    <string name="next">TODO</string>
+    <string name="repeat">TODO</string>
+    <string name="previous">TODO</string>
+    <string name="gredientbg">TODO</string>
 </resources>

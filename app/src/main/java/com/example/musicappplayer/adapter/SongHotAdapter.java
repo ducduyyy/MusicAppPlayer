@@ -13,7 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musicappplayer.R;
-import com.example.musicappplayer.model.SongHot;
+import com.example.musicappplayer.activity.PlayNhacActivity;
+import com.example.musicappplayer.model.Songs;
 import com.example.musicappplayer.service.APIService;
 import com.example.musicappplayer.service.Dataservice;
 import com.squareup.picasso.Picasso;
@@ -27,11 +28,11 @@ import retrofit2.Response;
 
 public class SongHotAdapter extends RecyclerView.Adapter<SongHotAdapter.ViewHolder> {
     Context context;
-    ArrayList<SongHot> songHotArrayList;
+    ArrayList<Songs> songsArrayList;
 
-    public SongHotAdapter(Context context, ArrayList<SongHot> songHotArrayList) {
+    public SongHotAdapter(Context context, ArrayList<Songs> songsArrayList) {
         this.context = context;
-        this.songHotArrayList = songHotArrayList;
+        this.songsArrayList = songsArrayList;
     }
 
     @NonNull
@@ -45,18 +46,18 @@ public class SongHotAdapter extends RecyclerView.Adapter<SongHotAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        SongHot songHot = songHotArrayList.get(position);
-        holder.txtcasi.setText(songHot.getCasi());
-        holder.txtten.setText(songHot.getTenBaiHat());
+        Songs songs = songsArrayList.get(position);
+        holder.txtcasi.setText(songs.getCasi());
+        holder.txtten.setText(songs.getTenBaiHat());
         Picasso.get()
-                .load(songHot.getHinhBaiHat())
+                .load(songs.getHinhBaiHat())
                 .into(holder.imghinh);
 
     }
 
     @Override
     public int getItemCount() {
-        return songHotArrayList.size();
+        return songsArrayList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -69,12 +70,20 @@ public class SongHotAdapter extends RecyclerView.Adapter<SongHotAdapter.ViewHold
             txtcasi = itemView.findViewById(R.id.textviewTencasi);
             imghinh = itemView.findViewById(R.id.imgviewSongHot);
             imgluotthich = itemView.findViewById(R.id.imgviewluotthich);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, PlayNhacActivity.class);
+                    intent.putExtra("song", songsArrayList.get(getAdapterPosition()));
+                    v.getContext().startActivity(intent);
+                }
+            });
             imgluotthich.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     imgluotthich.setImageResource(R.drawable.icon_love_red);
                     Dataservice dataservice = APIService.getService();
-                    Call<String> callback = dataservice.UpdateLuotThich("1",songHotArrayList.get(getPosition()).getIdBaiHat());
+                    Call<String> callback = dataservice.UpdateLuotThich("1", songsArrayList.get(getPosition()).getIdBaiHat());
                     callback.enqueue(new Callback<String>() {
                         @Override
                         public void onResponse(Call<String> call, Response<String> response) {
