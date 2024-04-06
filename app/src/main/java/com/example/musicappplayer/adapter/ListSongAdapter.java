@@ -1,6 +1,7 @@
 package com.example.musicappplayer.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musicappplayer.R;
-import com.example.musicappplayer.model.SongHot;
+import com.example.musicappplayer.activity.PlayNhacActivity;
+import com.example.musicappplayer.model.Songs;
 import com.example.musicappplayer.service.APIService;
 import com.example.musicappplayer.service.Dataservice;
 
@@ -24,9 +26,9 @@ import retrofit2.Response;
 
 public class ListSongAdapter extends RecyclerView.Adapter<ListSongAdapter.ViewHolder>{
     Context context;
-    ArrayList<SongHot> mangbaihat;
+    ArrayList<Songs> mangbaihat;
 
-    public ListSongAdapter(Context context, ArrayList<SongHot> mangbaihat) {
+    public ListSongAdapter(Context context, ArrayList<Songs> mangbaihat) {
         this.context = context;
         this.mangbaihat = mangbaihat;
     }
@@ -41,9 +43,9 @@ public class ListSongAdapter extends RecyclerView.Adapter<ListSongAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        SongHot songHot = mangbaihat.get(position);
-        holder.txtsingername.setText(songHot.getCasi());
-        holder.txtsongname.setText(songHot.getTenBaiHat());
+        Songs songs = mangbaihat.get(position);
+        holder.txtsingername.setText(songs.getCasi());
+        holder.txtsongname.setText(songs.getTenBaiHat());
         holder.txtindex.setText(position+1+"");
     }
 
@@ -88,6 +90,14 @@ public class ListSongAdapter extends RecyclerView.Adapter<ListSongAdapter.ViewHo
                 }
             });
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, PlayNhacActivity.class);
+                    intent.putExtra("song",mangbaihat.get(getAdapterPosition()));
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }

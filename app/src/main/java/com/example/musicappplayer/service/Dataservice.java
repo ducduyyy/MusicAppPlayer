@@ -5,7 +5,7 @@ import com.example.musicappplayer.model.Banner;
 import com.example.musicappplayer.model.ChuDe;
 import com.example.musicappplayer.model.ChudeVaTheLoai;
 import com.example.musicappplayer.model.Playlist;
-import com.example.musicappplayer.model.SongHot;
+import com.example.musicappplayer.model.Songs;
 import com.example.musicappplayer.model.TheLoai;
 
 import java.util.List;
@@ -28,22 +28,22 @@ public interface Dataservice {
     Call<List<Album>> getAlbumhot();
 
     @GET("baihatyeuthich.php")
-    Call<List<SongHot>> getSongs();
+    Call<List<Songs>> getSongs();
 
     @FormUrlEncoded
     @POST("danhsachbaihat.php")
-    Call<List<SongHot>> Getlistsongbybanner(@Field("idquangcao") String idquangcao);
+    Call<List<Songs>> Getlistsongbybanner(@Field("idquangcao") String idquangcao);
 
     @FormUrlEncoded
     @POST("danhsachbaihat.php")
-    Call<List<SongHot>> Getlistsongbyplaylist(@Field("idplaylist") String idplaylist);
+    Call<List<Songs>> Getlistsongbyplaylist(@Field("idplaylist") String idplaylist);
 
     @GET("danhsachplaylist.php")
     Call<List<Playlist>> Getlistplaylist();
 
     @FormUrlEncoded
     @POST("danhsachbaihat.php")
-    Call<List<SongHot>> GetlistsongbyTheloai(@Field("idtheloai") String idtheloai);
+    Call<List<Songs>> GetlistsongbyTheloai(@Field("idtheloai") String idtheloai);
     @GET("tatcachude.php")
     Call<List<ChuDe>> GetAllChuDe();
     @FormUrlEncoded
@@ -55,7 +55,7 @@ public interface Dataservice {
 
     @FormUrlEncoded
     @POST("danhsachbaihat.php")
-    Call<List<SongHot>> GetDanhsachbaihattheoalbum(@Field("idalbum") String idalbum);
+    Call<List<Songs>> GetDanhsachbaihattheoalbum(@Field("idalbum") String idalbum);
 
     @FormUrlEncoded
     @POST("updateluotthich.php")

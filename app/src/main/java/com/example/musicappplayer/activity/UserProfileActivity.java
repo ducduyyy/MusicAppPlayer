@@ -48,7 +48,7 @@ public class UserProfileActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        anhxa();
+        mapping();
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         if (firebaseUser == null){
@@ -100,7 +100,7 @@ public class UserProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void anhxa() {
+    private void mapping() {
         textViewWelcome = findViewById(R.id.textview_show_welcom);
         textViewFullName = findViewById(R.id.textview_fullname);
         textViewEmail = findViewById(R.id.textview_email);

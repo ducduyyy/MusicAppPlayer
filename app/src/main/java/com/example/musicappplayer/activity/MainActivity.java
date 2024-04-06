@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        anhxa();
+        mapping();
         innit();
     }
 
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         mTablayout.getTabAt(2).setIcon(R.drawable.ic_storage);
     }
 
-    private void anhxa() {
+    private void mapping() {
         mTablayout = findViewById(R.id.myTabLayout);
         viewPager = findViewById(R.id.myViewpager);
     }

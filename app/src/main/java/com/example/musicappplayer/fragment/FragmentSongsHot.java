@@ -1,7 +1,6 @@
 package com.example.musicappplayer.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musicappplayer.R;
 import com.example.musicappplayer.adapter.SongHotAdapter;
-import com.example.musicappplayer.model.SongHot;
+import com.example.musicappplayer.model.Songs;
 import com.example.musicappplayer.service.APIService;
 import com.example.musicappplayer.service.Dataservice;
 
@@ -40,11 +39,11 @@ public class FragmentSongsHot extends Fragment {
 
     private void getData() {
         Dataservice dataservice = APIService.getService();
-        Call<List<SongHot>> callback = dataservice.getSongs();
-        callback.enqueue(new Callback<List<SongHot>>() {
+        Call<List<Songs>> callback = dataservice.getSongs();
+        callback.enqueue(new Callback<List<Songs>>() {
             @Override
-            public void onResponse(Call<List<SongHot>> call, Response<List<SongHot>> response) {
-                ArrayList<SongHot> songArrayList = (ArrayList<SongHot>) response.body();
+            public void onResponse(Call<List<Songs>> call, Response<List<Songs>> response) {
+                ArrayList<Songs> songArrayList = (ArrayList<Songs>) response.body();
                 songHotAdapter = new SongHotAdapter(getActivity(),songArrayList);
                 LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
                 linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -53,7 +52,7 @@ public class FragmentSongsHot extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<SongHot>> call, Throwable t) {
+            public void onFailure(Call<List<Songs>> call, Throwable t) {
 
             }
         });
