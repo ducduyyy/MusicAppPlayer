@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:scrollbars="none"
     android:fillViewport="true">
     <LinearLayout
@@ -9,7 +10,42 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:background="@drawable/custom_backgrounds"
+            android:id="@+id/appbarlayoutsearchbaihat1"
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbarsearchbaihat1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_below="@+id/appbarlayoutsearchbaihat1"
+            android:layout_gravity="bottom"
+            android:id="@+id/recyclelerviewsearchbaihat1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        <TextView
+            android:visibility="gone"
+            android:textColor="#f20"
+            android:gravity="center"
+            android:text="Khong co du lieu"
+            android:id="@+id/textviewkhongcodulieu1"
+            android:textSize="35sp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </TextView>
+        </RelativeLayout>
         <fragment
             android:name="com.example.musicappplayer.fragment.Fragment_Banner"
             android:id="@+id/fragmentbanner"

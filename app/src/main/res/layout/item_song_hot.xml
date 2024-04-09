@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"/>
     <ImageView
         android:layout_marginRight="10dp"
-        android:src="@drawable/ic_favorite_border"
+        android:src="@drawable/ic_favorite"
         android:id="@+id/imgviewluotthich"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
