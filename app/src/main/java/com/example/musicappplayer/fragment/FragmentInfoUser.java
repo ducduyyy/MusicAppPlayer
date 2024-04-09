@@ -3,11 +3,13 @@ package com.example.musicappplayer.fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,11 +26,15 @@ import com.example.musicappplayer.activity.SignInActivity;
 import com.example.musicappplayer.activity.UserProfileActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FragmentInfoUser extends Fragment {
     View view;
     LinearLayout linearLayout_welcome, linearLayout_dangxuat;
     TextView txtname,txtdangxuat;
+    CircleImageView imageView;
 
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     FirebaseUser firebaseUser;
@@ -38,6 +44,7 @@ public class FragmentInfoUser extends Fragment {
         view = inflater.inflate(R.layout.fragment_info_user,container,false);
         linearLayout_welcome = view.findViewById(R.id.linear_welcome);
         txtname = view.findViewById(R.id.textview_name);
+        imageView = view.findViewById(R.id.img_info_user);
         txtdangxuat = view.findViewById(R.id.textview_dangxuat);
         Log.d("create", "onCreateView ");
         firebaseUser = firebaseAuth.getCurrentUser();
@@ -106,9 +113,12 @@ public class FragmentInfoUser extends Fragment {
         if (firebaseUser !=null){
             String name = firebaseUser.getDisplayName();
             txtname.setText(name);
+            Uri uri = firebaseUser.getPhotoUrl();
+            Picasso.get().load(uri).fit().into(imageView);
         }
         else {
             txtname.setText("Đăng nhập/Đăng ký");
+            Picasso.get().load(R.drawable.ic_profile).fit().into(imageView);
         }
 
     }

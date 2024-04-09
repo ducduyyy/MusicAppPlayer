@@ -41,11 +41,27 @@ private String linkBaiHat;
 @SerializedName("LuotThich")
 @Expose
 private String luotThich;
+@Expose
+private String songs;
 
-public String getIdBaiHat() {
-return idBaiHat;
-}
+    public Songs(String idBaiHat, String idAlbum, String idTheLoai, String idPlayList, String tenBaiHat, String hinhBaiHat, String casi, String linkBaiHat, String luotThich, String songs) {
+        this.idBaiHat = idBaiHat;
+        this.idAlbum = idAlbum;
+        this.idTheLoai = idTheLoai;
+        this.idPlayList = idPlayList;
+        this.tenBaiHat = tenBaiHat;
+        this.hinhBaiHat = hinhBaiHat;
+        this.casi = casi;
+        this.linkBaiHat = linkBaiHat;
+        this.luotThich = luotThich;
+        this.songs = songs;
+    }
 
+    public void setSongs(String songs) {this.songs = songs;}
+public String getSongs() {return songs;}
+    public String getIdBaiHat() {
+        return idBaiHat;
+    }
 public void setIdBaiHat(String idBaiHat) {
 this.idBaiHat = idBaiHat;
 }
@@ -114,17 +130,6 @@ public void setLuotThich(String luotThich) {
 this.luotThich = luotThich;
 }
 
-    public Songs(String idBaiHat, String idAlbum, String idTheLoai, String idPlayList, String tenBaiHat, String hinhBaiHat, String casi, String linkBaiHat, String luotThich) {
-        this.idBaiHat = idBaiHat;
-        this.idAlbum = idAlbum;
-        this.idTheLoai = idTheLoai;
-        this.idPlayList = idPlayList;
-        this.tenBaiHat = tenBaiHat;
-        this.hinhBaiHat = hinhBaiHat;
-        this.casi = casi;
-        this.linkBaiHat = linkBaiHat;
-        this.luotThich = luotThich;
-    }
     protected Songs(Parcel in){
         idBaiHat = in.readString();
        idAlbum = in.readString();
@@ -137,6 +142,22 @@ this.luotThich = luotThich;
         luotThich = in.readString();
 
     }
+
+    public Songs(Songs songs){
+        this.idBaiHat = songs.getIdBaiHat();
+        this.idAlbum = songs.getIdAlbum();
+        this.idTheLoai = songs.getIdTheLoai();
+        this.idPlayList = songs.getIdPlayList();
+        this.tenBaiHat = songs.getTenBaiHat();
+        this.hinhBaiHat = songs.getHinhBaiHat();
+        this.casi = songs.getCasi();
+        this.linkBaiHat = songs.getLinkBaiHat();
+        this.luotThich = songs.getLuotThich();
+    }
+
+    public Songs() {
+    }
+
     public static final Creator<Songs> CREATOR = new Creator<Songs>() {
         @Override
         public Songs createFromParcel(Parcel in) {

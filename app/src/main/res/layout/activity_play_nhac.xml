@@ -33,10 +33,12 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPagerdianhac"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
+        android:layout_height="351dp"
         android:layout_below="@+id/toolbarplaynhac"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="56dp" />
+
+        android:layout_marginTop="0dp" 
+        android:layout_centerHorizontal="true" />
+
 
     <RelativeLayout
         android:id="@+id/rl_in4music"
@@ -44,7 +46,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/viewPagerdianhac"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="16dp">
 
         <TextView
@@ -73,16 +76,16 @@
             android:layout_height="25dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/ic_favorite_border"/>
+            android:background="@drawable/ic_favorite_border" />
     </RelativeLayout>
 
     <SeekBar
         android:id="@+id/seekBartime"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="30dp"
         android:layout_below="@+id/rl_in4music"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
         android:progressTint="#FFFFFF"
         android:thumb="@drawable/thumb" />
@@ -115,18 +118,19 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
         android:layout_below="@id/rltime"
-        android:orientation="horizontal"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="-18dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="150dp">
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/imageButtonrandom"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="47dp"
+            android:layout_height="35dp"
             android:layout_centerVertical="true"
             android:layout_marginEnd="24dp"
             android:layout_toStartOf="@+id/imageButtonpreview"
@@ -137,10 +141,10 @@
 
         <ImageButton
             android:id="@+id/imageButtonpreview"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="42dp"
+            android:layout_height="48dp"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="34dp"
             android:layout_toStartOf="@+id/imageButtonplaypause"
             android:background="@null"
             android:contentDescription="@string/previous"
@@ -159,8 +163,8 @@
 
         <ImageButton
             android:id="@+id/imageButtonnext"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="46dp"
+            android:layout_height="43dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
             android:layout_toEndOf="@+id/imageButtonplaypause"
@@ -171,8 +175,8 @@
 
         <ImageButton
             android:id="@+id/imageButtonlap"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="42dp"
+            android:layout_height="43dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="24dp"
             android:layout_toEndOf="@+id/imageButtonnext"

@@ -1,7 +1,6 @@
 package com.example.musicappplayer.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +13,14 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musicappplayer.R;
+
 import com.example.musicappplayer.activity.PlayNhacActivity;
 import com.example.musicappplayer.model.Songs;
 import com.example.musicappplayer.service.APIService;
 import com.example.musicappplayer.service.Dataservice;
+
+import com.example.musicappplayer.model.Songs;
+
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -29,8 +32,7 @@ import retrofit2.Response;
 public class SearchBaiHatAdapter extends  RecyclerView.Adapter<SearchBaiHatAdapter.ViewHolder> {
     Context context;
     ArrayList<Songs> mangbaihat;
-
-    public SearchBaiHatAdapter(Context context, ArrayList<Songs> mangbaihat) {
+    public SearchBaiHatAdapter(Context context, ArrayList<Songs> mangbaihat){
         this.context = context;
         this.mangbaihat = mangbaihat;
     }

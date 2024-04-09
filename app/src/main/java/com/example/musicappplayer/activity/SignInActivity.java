@@ -34,10 +34,10 @@ public class SignInActivity extends AppCompatActivity {
     EditText editTextEmail, editTextPassword;
 
     Button signIn;
-    TextView signUp;
+    TextView signUp,textForgotPassword;
     ProgressBar progressBar;
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-    @SuppressLint("MissingInflatedId")
+    @SuppressLint({"MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +51,7 @@ public class SignInActivity extends AppCompatActivity {
 
         editTextEmail = findViewById(R.id.email);
         editTextPassword = findViewById(R.id.password);
+        textForgotPassword = findViewById(R.id.textview_forgot_password);
         signIn = findViewById(R.id.btn_sign_in);
         signUp = findViewById(R.id.sign_up);
         progressBar = findViewById(R.id.progressBarSignIn);
@@ -61,6 +62,7 @@ public class SignInActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
                 startActivity(intent);
+                finish();
 
             }
         });
@@ -89,6 +91,12 @@ public class SignInActivity extends AppCompatActivity {
                 }
             }
         });
+        textForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SignInActivity.this,ForgotPasswordActivity.class));
+            }
+        });
     }
 
     private void signInUser(String email, String password) {
@@ -100,6 +108,7 @@ public class SignInActivity extends AppCompatActivity {
                             FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 //                            if (firebaseUser.isEmailVerified()){
                                 Toast.makeText(SignInActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+//                                startActivity(new Intent(SignInActivity.this, UserProfileActivity.class));
                                 finish();
 //                            }else {
 //                                firebaseUser.sendEmailVerification();
