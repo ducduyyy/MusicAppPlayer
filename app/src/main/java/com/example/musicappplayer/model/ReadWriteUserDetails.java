@@ -6,6 +6,12 @@ public class ReadWriteUserDetails {
     public ReadWriteUserDetails() {
     }
 
+    public ReadWriteUserDetails(String textDoB, String textGender, String textMobile) {
+        this.doB = textDoB;
+        this.gender = textGender;
+        this.PhoneNumber = textMobile;
+    }
+
     public ReadWriteUserDetails(String fullname, String doB, String gender, String PhoneNumber) {
         this.fullname = fullname;
         this.doB = doB;

@@ -35,8 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="400dp"
         android:layout_below="@+id/toolbarplaynhac"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="56dp" />
+        android:layout_centerHorizontal="true" />
 
     <RelativeLayout
         android:id="@+id/rl_in4music"
@@ -44,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/viewPagerdianhac"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="16dp">
 
         <TextView
@@ -79,7 +78,7 @@
     <SeekBar
         android:id="@+id/seekBartime"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="30dp"
         android:layout_below="@+id/rl_in4music"
         android:layout_marginStart="16dp"
         android:layout_marginTop="30dp"

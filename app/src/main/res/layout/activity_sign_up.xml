@@ -9,7 +9,7 @@
     android:background="@drawable/background_login"
     tools:context=".activity.SignInActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
@@ -259,15 +259,18 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <ProgressBar
-                android:id="@+id/progressBarSignUp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:elevation="10dp"
-                android:visibility="gone" />
 
 
         </LinearLayout>
-    </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progressBarSignUp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="10dp"
+            android:visibility="gone"
+           android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
 
 </ScrollView>
