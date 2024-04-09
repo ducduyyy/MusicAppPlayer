@@ -206,8 +206,8 @@ public class ListSongActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(v->finish());
-        collapsingToolbarLayout.setExpandedTitleColor(Color.WHITE);
-        collapsingToolbarLayout.setCollapsedTitleTextColor(Color.WHITE);
+        collapsingToolbarLayout.setExpandedTitleColor(Color.CYAN);
+        collapsingToolbarLayout.setCollapsedTitleTextColor(Color.CYAN);
         floatingActionButtonlistsong.setEnabled(false);
     }
 

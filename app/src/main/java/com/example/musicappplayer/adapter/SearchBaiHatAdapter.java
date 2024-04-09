@@ -1,7 +1,6 @@
 package com.example.musicappplayer.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musicappplayer.R;
-import com.example.musicappplayer.model.SongHot;
+import com.example.musicappplayer.model.Songs;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class SearchBaiHatAdapter extends RecyclerView.Adapter<SearchBaiHatAdapter.ViewHolder> {
     Context context;
-    ArrayList<SongHot> mangbaihat;
-    public SearchBaiHatAdapter(Context context,ArrayList<SongHot> mangbaihat){
+    ArrayList<Songs> mangbaihat;
+    public SearchBaiHatAdapter(Context context, ArrayList<Songs> mangbaihat){
         this.context = context;
         this.mangbaihat = mangbaihat;
     }
@@ -34,7 +33,7 @@ public class SearchBaiHatAdapter extends RecyclerView.Adapter<SearchBaiHatAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        SongHot baihat = mangbaihat.get(position);
+        Songs baihat = mangbaihat.get(position);
         holder.txtTenbaihat.setText(baihat.getTenBaiHat());
         holder.txtCasi.setText(baihat.getCasi());
         Picasso.get()

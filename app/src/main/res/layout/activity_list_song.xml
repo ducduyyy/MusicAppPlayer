@@ -23,6 +23,7 @@
             app:expandedTitleMarginBottom="33dp"
             android:background="@mipmap/ic_launcher"
             android:fitsSystemWindows="true"
+            android:layout_marginBottom="20dp"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
         <androidx.appcompat.widget.Toolbar
@@ -50,14 +51,13 @@
         app:borderWidth="25dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         app:layout_anchor="@id/appbarlayout"
         app:layout_anchorGravity="bottom|center"
         android:id="@+id/floatingactionbutton"
         app:fabSize="normal"
         android:scaleType="fitXY"
         android:src="@drawable/ic_library_music"
-        app:backgroundTint="#a845de"/>
+        app:backgroundTint="@color/SkyBlue"/>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
