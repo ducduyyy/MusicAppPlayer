@@ -194,7 +194,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 bundle.putString("email",txtEmail);
                                 bundle.putString("pass",txtpassword);
                                 intent.putExtra("user_info",bundle);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
                                 finish();
                             }else {

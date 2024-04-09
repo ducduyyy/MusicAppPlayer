@@ -2,7 +2,9 @@ package com.example.musicappplayer.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,13 +31,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserProfileActivity extends AppCompatActivity {
 
     TextView textViewWelcome, textViewFullName,textViewEmail, textViewDoB, textViewGender, textViewMobile;
     ProgressBar progressBar;
     String fullname, email, gender,doB,mobile;
-    ImageView imageView;
+    CircleImageView imageView;
     FirebaseAuth firebaseAuth;
     Toolbar toolbar;
     @Override
@@ -63,6 +68,14 @@ public class UserProfileActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Profile");
         toolbar.setNavigationOnClickListener(v->finish());
 
+        //set Onclick on img to open upload pic
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserProfileActivity.this, UploadProfilePicActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 
@@ -87,17 +100,54 @@ public class UserProfileActivity extends AppCompatActivity {
                     textViewDoB.setText(doB);
                     textViewGender.setText(gender);
                     textViewMobile.setText(mobile);
+                    Uri uri = firebaseUser.getPhotoUrl();
+                    Picasso.get().load(uri).fit().into(imageView);
+                }else {
+                    Toast.makeText(UserProfileActivity.this, "Something went wrong!",
+                            Toast.LENGTH_LONG).show();
                 }
                 progressBar.setVisibility(View.GONE);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(UserProfileActivity.this, "Something wnet wrong!",
+                Toast.makeText(UserProfileActivity.this, "Something went wrong!",
                         Toast.LENGTH_LONG).show();
                 progressBar.setVisibility(View.GONE);
             }
         });
+    }
+    //create actionBar Menu
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.common_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.menu_refresh){
+            startActivity(getIntent());
+            finish();
+            overridePendingTransition(0,0);
+
+        } else if (id==R.id.menu_update_profile) {
+            Intent intent = new Intent(UserProfileActivity.this,UpdateProfileActivity.class);
+            startActivity(intent);
+        } else if (id==R.id.menu_change_password) {
+            Intent intent = new Intent(UserProfileActivity.this,ChangePasswordActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.menu_logout) {
+            firebaseAuth.signOut();
+            Toast.makeText(UserProfileActivity.this, "Logged Out", Toast.LENGTH_LONG).show();
+            finish();
+        }else {
+            Toast.makeText(UserProfileActivity.this, "Something went wrong!", Toast.LENGTH_LONG).show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void mapping() {
@@ -109,6 +159,9 @@ public class UserProfileActivity extends AppCompatActivity {
         textViewMobile = findViewById(R.id.textview_mobile);
         progressBar = findViewById(R.id.progressBarProfile);
         toolbar = findViewById(R.id.toolbar_user_profile);
+        imageView = findViewById(R.id.img_profile_dp);
+
 
     }
+
 }
