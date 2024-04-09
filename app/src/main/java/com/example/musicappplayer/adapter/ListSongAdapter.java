@@ -1,7 +1,15 @@
 package com.example.musicappplayer.adapter;
 
+import static androidx.core.content.ContextCompat.checkSelfPermission;
+
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +21,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musicappplayer.R;
+import com.example.musicappplayer.activity.MainActivity;
 import com.example.musicappplayer.activity.PlayNhacActivity;
 import com.example.musicappplayer.model.Songs;
 import com.example.musicappplayer.service.APIService;
 import com.example.musicappplayer.service.Dataservice;
+import com.example.musicappplayer.untils.DownloadMusicManager;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ListSongAdapter extends RecyclerView.Adapter<ListSongAdapter.ViewHolder>{
     Context context;
@@ -32,6 +48,7 @@ public class ListSongAdapter extends RecyclerView.Adapter<ListSongAdapter.ViewHo
         this.context = context;
         this.mangbaihat = mangbaihat;
     }
+
 
     @NonNull
     @Override
@@ -56,7 +73,7 @@ public class ListSongAdapter extends RecyclerView.Adapter<ListSongAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView txtindex, txtsongname, txtsingername;
-        ImageView imageViewluotthich;
+        ImageView imageViewluotthich, imageviewdownloadmusic;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -64,6 +81,8 @@ public class ListSongAdapter extends RecyclerView.Adapter<ListSongAdapter.ViewHo
             txtsongname = itemView.findViewById(R.id.textviewsongname);
             txtindex = itemView.findViewById(R.id.textviewlistindex);
             imageViewluotthich  =itemView.findViewById(R.id.imageviewluotthichlistsong);
+            imageviewdownloadmusic = itemView.findViewById(R.id.imageviewdownloadsong);
+
             imageViewluotthich.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -89,6 +108,27 @@ public class ListSongAdapter extends RecyclerView.Adapter<ListSongAdapter.ViewHo
                     imageViewluotthich.setEnabled(false);
                 }
             });
+
+            imageviewdownloadmusic.setOnClickListener(v -> {
+                int currentPosition = getAdapterPosition(); // Lấy vị trí hiện tại của item trong danh sách
+                if (currentPosition != RecyclerView.NO_POSITION) {
+
+                    Songs selectedSong = mangbaihat.get(currentPosition); // Lấy đối tượng Songs tại vị trí hiện tại
+                    DownloadMusicManager downloadMusicManager = new DownloadMusicManager(context);
+                    downloadMusicManager.checkPermission((Activity) context ,selectedSong, new DownloadMusicManager.PermissionCallback() {
+                        @Override
+                        public void onPermissionGranted(Songs songs) {
+                            downloadMusicManager.checkPermissonAndDownloadSong(songs);
+                        }
+
+                        @Override
+                        public void onPermissionDenied() {
+
+                        }
+                    });
+                }
+            });
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

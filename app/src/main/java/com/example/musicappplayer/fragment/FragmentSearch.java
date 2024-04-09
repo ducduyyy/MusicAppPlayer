@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musicappplayer.R;
 import com.example.musicappplayer.adapter.SearchBaiHatAdapter;
-import com.example.musicappplayer.model.SongHot;
+import com.example.musicappplayer.model.Songs;
 import com.example.musicappplayer.service.APIService;
 import com.example.musicappplayer.service.Dataservice;
 
@@ -75,11 +75,11 @@ public class FragmentSearch extends Fragment {
     }
     private void SearchTuKhoaBaiHat(String query){
         Dataservice dataservice = APIService.getService();
-        Call<List<SongHot>> callback = dataservice.GetSearchBaihat(query);
-        callback.enqueue(new Callback<List<SongHot>>() {
+        Call<List<Songs>> callback = dataservice.GetSearchBaihat(query);
+        callback.enqueue(new Callback<List<Songs>>() {
             @Override
-            public void onResponse(Call<List<SongHot>> call, Response<List<SongHot>> response) {
-                ArrayList<SongHot> mangbaihat = (ArrayList<SongHot>) response.body();
+            public void onResponse(Call<List<Songs>> call, Response<List<Songs>> response) {
+                ArrayList<Songs> mangbaihat = (ArrayList<Songs>) response.body();
                 if (mangbaihat.size() > 0){
                     searchBaiHatAdapter = new SearchBaiHatAdapter(getActivity(),mangbaihat);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -94,7 +94,7 @@ public class FragmentSearch extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<List<SongHot>> call, Throwable t) {
+            public void onFailure(Call<List<Songs>> call, Throwable t) {
 
             }
         });
