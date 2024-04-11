@@ -13,26 +13,6 @@
         <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-<!--             <LinearLayout-->
-<!--                 android:layout_width="match_parent"-->
-<!--                 android:layout_height="30dp"-->
-<!--                 android:orientation="horizontal"-->
-<!--                 android:background="@drawable/custom_backgrounds">-->
-<!--                 <TextView-->
-<!--                     android:layout_width="wrap_content"-->
-<!--                     android:layout_height="wrap_content"-->
-<!--                     android:text="Khám Phá"-->
-<!--                     android:textSize="20sp"-->
-<!--                     android:textStyle="bold"-->
-<!--                     android:layout_marginRight="180dp"/>-->
-
-<!--                 <ImageButton-->
-<!--                     android:id="@+id/img_btn_search"-->
-<!--                     android:layout_width="wrap_content"-->
-<!--                     android:layout_height="wrap_content"-->
-<!--                     android:background="@drawable/ic_search_big"-->
-<!--                     android:layout_marginLeft="30dp"/>-->
-<!--             </LinearLayout>-->
             <com.google.android.material.appbar.AppBarLayout
                 android:background="@drawable/custom_backgrounds"
                 android:id="@+id/appbarlayoutsearchbaihat1"
