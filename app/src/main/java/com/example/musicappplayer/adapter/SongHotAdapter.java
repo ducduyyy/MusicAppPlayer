@@ -64,8 +64,10 @@ public class SongHotAdapter extends RecyclerView.Adapter<SongHotAdapter.ViewHold
 
         TextView txtten,txtcasi;
         ImageView imghinh,imgluotthich;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
             txtten = itemView.findViewById(R.id.textviewTenbaihat);
             txtcasi = itemView.findViewById(R.id.textviewTencasi);
             imghinh = itemView.findViewById(R.id.imgviewSongHot);
@@ -100,6 +102,7 @@ public class SongHotAdapter extends RecyclerView.Adapter<SongHotAdapter.ViewHold
                             public void onFailure(Call<String> call, Throwable t) {
 
                             }
+
                         });
                     }else {
                         imgluotthich.setImageResource(R.drawable.ic_favorite);
@@ -122,6 +125,7 @@ public class SongHotAdapter extends RecyclerView.Adapter<SongHotAdapter.ViewHold
                             }
                         });
                     }
+
 
                 }
             });

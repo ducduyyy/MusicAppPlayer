@@ -2,7 +2,9 @@ package com.example.musicappplayer.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+
 import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
