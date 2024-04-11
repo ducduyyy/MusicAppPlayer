@@ -70,7 +70,7 @@ public class DownloadMusic extends AsyncTask<Songs, Integer, Songs>{
 
     @Override
     protected void onPostExecute(Songs songs) {
-        Toast.makeText(context, "Downloaded \"" + songs.getTenBaiHat() + "\"", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "Downloading \"" + songs.getTenBaiHat() + "\"", Toast.LENGTH_SHORT).show();
 
         EventBus.getDefault().post(new UpdateDowloadedSongs());
         File file = downloadMusicManager.getFile(songs);

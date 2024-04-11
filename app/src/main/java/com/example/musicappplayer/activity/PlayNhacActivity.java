@@ -40,7 +40,7 @@ public class PlayNhacActivity extends AppCompatActivity {
     SeekBar sktime;
     ImageButton imgplay, imgrepeat, imgnext, imgpre, imgrandom;
     ViewPager viewPagerplay;
-    public static ArrayList<Songs> songArrayList = new ArrayList<>();
+    public static ArrayList<Songs> songArrayList = new ArrayList<>() ;
     public static ViewPagerPlaySong viewPagerPlaySong;
     FragmentDiscography fragmentDiscography;
     FragmentPlayListSong fragmentPlayListSong;

@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.musicappplayer.R;
 import com.example.musicappplayer.activity.MainActivity;
 import com.example.musicappplayer.activity.PlayNhacActivity;
+import com.example.musicappplayer.fragment.SongHistoryFragment;
 import com.example.musicappplayer.model.Songs;
 import com.example.musicappplayer.service.APIService;
 import com.example.musicappplayer.service.Dataservice;
@@ -43,12 +45,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ListSongAdapter extends RecyclerView.Adapter<ListSongAdapter.ViewHolder>{
     Context context;
     ArrayList<Songs> mangbaihat;
-
     public ListSongAdapter(Context context, ArrayList<Songs> mangbaihat) {
         this.context = context;
         this.mangbaihat = mangbaihat;
     }
-
 
     @NonNull
     @Override

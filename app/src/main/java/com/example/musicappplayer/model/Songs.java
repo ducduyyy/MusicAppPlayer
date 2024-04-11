@@ -57,6 +57,9 @@ private String songs;
         this.songs = songs;
     }
 
+    public Songs(String songname, String songspath) {
+    }
+
     public void setSongs(String songs) {this.songs = songs;}
 public String getSongs() {return songs;}
     public String getIdBaiHat() {
