@@ -2,6 +2,7 @@ package com.example.musicappplayer.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.musicappplayer.R;
 
+import com.example.musicappplayer.R;
 import com.example.musicappplayer.activity.PlayNhacActivity;
 import com.example.musicappplayer.model.Songs;
 import com.example.musicappplayer.service.APIService;
@@ -78,52 +79,49 @@ public class SearchBaiHatAdapter extends  RecyclerView.Adapter<SearchBaiHatAdapt
                     context.startActivity(intent);
                 }
             });
-            imgluotthich.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(imgluotthich.getDrawable().getConstantState().equals(context.getDrawable(R.drawable.ic_favorite).getConstantState())){
-                        imgluotthich.setImageResource(R.drawable.icon_love_red);
-                        Dataservice dataservice = APIService.getService();
-                        Call<String> callback = dataservice.UpdateLuotThich("1", mangbaihat.get(getPosition()).getIdBaiHat());
-                        callback.enqueue(new Callback<String>() {
-                            @Override
-                            public void onResponse(Call<String> call, Response<String> response) {
-                                String ketqua = response.body();
-                                if(ketqua.equals("Success")){
-                                    Toast.makeText(context, "Đã thích", Toast.LENGTH_SHORT).show();
-                                }else{
-                                    Toast.makeText(context, "Lỗi!!", Toast.LENGTH_SHORT).show();
-                                }
+            imgluotthich.setOnClickListener(v -> {
+                if(imgluotthich.getDrawable().getConstantState().equals(context.getDrawable(R.drawable.ic_favorite).getConstantState())){
+                    imgluotthich.setImageResource(R.drawable.icon_love_red);
+                    Dataservice dataservice = APIService.getService();
+                    Call<String> callback = dataservice.UpdateLuotThich("1", mangbaihat.get(getPosition()).getIdBaiHat());
+                    callback.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            String ketqua = response.body();
+                            if(ketqua.equals("Success")){
+                                Toast.makeText(context, "Đã thích", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(context, "Lỗi!!", Toast.LENGTH_SHORT).show();
                             }
+                        }
 
-                            @Override
-                            public void onFailure(Call<String> call, Throwable t) {
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
 
+                        }
+                    });
+                }else {
+                    imgluotthich.setImageResource(R.drawable.ic_favorite);
+                    Dataservice dataservice = APIService.getService();
+                    Call<String> callback = dataservice.UpdateLuotThich("-1", mangbaihat.get(getPosition()).getIdBaiHat());
+                    callback.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            String ketqua = response.body();
+                            if(ketqua.equals("Success")){
+                                Toast.makeText(context, "Đã bỏ thích", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(context, "Lỗi!!", Toast.LENGTH_SHORT).show();
                             }
-                        });
-                    }else {
-                        imgluotthich.setImageResource(R.drawable.ic_favorite);
-                        Dataservice dataservice = APIService.getService();
-                        Call<String> callback = dataservice.UpdateLuotThich("-1", mangbaihat.get(getPosition()).getIdBaiHat());
-                        callback.enqueue(new Callback<String>() {
-                            @Override
-                            public void onResponse(Call<String> call, Response<String> response) {
-                                String ketqua = response.body();
-                                if(ketqua.equals("Success")){
-                                    Toast.makeText(context, "Đã bỏ thích", Toast.LENGTH_SHORT).show();
-                                }else{
-                                    Toast.makeText(context, "Lỗi!!", Toast.LENGTH_SHORT).show();
-                                }
-                            }
+                        }
 
-                            @Override
-                            public void onFailure(Call<String> call, Throwable t) {
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
 
-                            }
-                        });
-                    }
-
+                        }
+                    });
                 }
+
             });
         }
     }
