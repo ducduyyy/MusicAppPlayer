@@ -4,16 +4,25 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musicappplayer.R;
+import com.example.musicappplayer.activity.PlayNhacActivity;
 import com.example.musicappplayer.model.Songs;
+import com.example.musicappplayer.service.APIService;
+import com.example.musicappplayer.service.Dataservice;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PlayNhacAdapter extends RecyclerView.Adapter<PlayNhacAdapter.ViewHolder> {
     Context context;
@@ -53,11 +62,15 @@ public class PlayNhacAdapter extends RecyclerView.Adapter<PlayNhacAdapter.ViewHo
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView txtindex,txttenbaihat,txtcasi;
+        ImageView imgluottim;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtindex = itemView.findViewById(R.id.textviewindexplay);
             txtcasi = itemView.findViewById(R.id.textviewnameSinger);
             txttenbaihat = itemView.findViewById(R.id.textviewNamePlay);
+            imgluottim = itemView.findViewById(R.id.imageViewtimplaynhac);
+
+
         }
     }
 }

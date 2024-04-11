@@ -1,22 +1,43 @@
 package com.example.musicappplayer.activity;
 
+import static androidx.compose.ui.tooling.data.SlotTreeKt.getPosition;
+
 import android.annotation.SuppressLint;
+import android.app.Activity;
+
+import android.content.Context;
+
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+
+import android.graphics.drawable.BitmapDrawable;
+
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
+
+import android.widget.ImageView;
+
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -28,25 +49,41 @@ import com.example.musicappplayer.fragment.FragmentDiscography;
 import com.example.musicappplayer.fragment.FragmentPlayListSong;
 import com.example.musicappplayer.model.Songs;
 
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
+import com.example.musicappplayer.service.APIService;
+import com.example.musicappplayer.service.Dataservice;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Random;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class PlayNhacActivity extends AppCompatActivity {
 
     Toolbar toolbarplay;
     TextView txttimesong, txtTotaltimesong, txtTencasi, txtTenbaihat;
+    RelativeLayout relativeLayout;
     SeekBar sktime;
     ImageButton imgplay, imgrepeat, imgnext, imgpre, imgrandom;
     ViewPager viewPagerplay;
-    public static ArrayList<Songs> songArrayList = new ArrayList<>() ;
-    public static ViewPagerPlaySong viewPagerPlaySong;
+    ImageView imgtimplaynhac,imgtimborder;
+    public static ArrayList<Songs> songArrayList = new ArrayList<>();
+    ViewPagerPlaySong viewPagerPlaySong;
     FragmentDiscography fragmentDiscography;
     FragmentPlayListSong fragmentPlayListSong;
-    MediaPlayer mediaPlayer;
+    static MediaPlayer mediaPlayer;
     int position = 0;
     boolean repeat = false, checkrandom = false, next = false;
+
+    static PlayMp3 playMp3;
+
+    Context context = this;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -61,14 +98,23 @@ public class PlayNhacActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        if (mediaPlayer!=null){
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer=null;
+        }
         getDataFromIntent();
         mapping();
         updateTime();
         eventClick();
-
     }
 
     private void eventClick() {
+        setSupportActionBar(toolbarplay);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbarplay.setNavigationOnClickListener(v -> {
+            finish();
+        });
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -79,11 +125,62 @@ public class PlayNhacActivity extends AppCompatActivity {
                         txtTencasi.setText(songArrayList.get(0).getCasi());
                         handler.removeCallbacks(this);
                     } else {
-                        handler.postDelayed(this, 300);
+                        handler.postDelayed(this, 500);
                     }
                 }
             }
-        }, 500);
+
+        }, 100);
+        imgtimplaynhac.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("test", "onClick: "+imgtimplaynhac.getDrawable().getConstantState().toString());
+                Log.d("test", "onClick: "+context.getDrawable(R.drawable.ic_favorite_border).getConstantState().toString());
+
+                if(imgtimplaynhac.getDrawable().getConstantState().equals(context.getDrawable(R.drawable.ic_favorite_border).getConstantState())){
+                    imgtimplaynhac.setImageResource(R.drawable.icon_love_red);
+                    Dataservice dataservice = APIService.getService();
+                    Call<String> callback = dataservice.UpdateLuotThich("1", songArrayList.get(0).getIdBaiHat());
+                    callback.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            String ketqua = response.body();
+                            if(ketqua.equals("Success")){
+                                Toast.makeText(context, "Đã thích", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(context, "Lỗi!!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+
+                        }
+                    });
+                }else {
+                    imgtimplaynhac.setImageResource(R.drawable.ic_favorite_border);
+                    Dataservice dataservice = APIService.getService();
+                    Call<String> callback = dataservice.UpdateLuotThich("-1", songArrayList.get(0).getIdBaiHat());
+                    callback.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            String ketqua = response.body();
+                            if(ketqua.equals("Success")){
+                                Toast.makeText(context, "Đã bỏ thích", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(context, "Lỗi!!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+
+                        }
+                    });
+                }
+
+            }
+        });
         imgplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,39 +193,33 @@ public class PlayNhacActivity extends AppCompatActivity {
                 }
             }
         });
-        imgrepeat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (repeat == false) {
-                    if (checkrandom == true) {
-                        checkrandom = false;
-                        imgrandom.setImageResource(R.drawable.ic_shuffle);
-                        imgrepeat.setImageResource(R.drawable.ic_repeat_white_circle);
-                    }
+        imgrepeat.setOnClickListener(v -> {
+            if (!repeat) {
+                if (checkrandom == true) {
+                    checkrandom = false;
+                    imgrandom.setImageResource(R.drawable.ic_shuffle);
                     imgrepeat.setImageResource(R.drawable.ic_repeat_white_circle);
-
-                    repeat = true;
-                } else {
-                    imgrepeat.setImageResource(R.drawable.ic_repeat);
-                    repeat = false;
                 }
+                imgrepeat.setImageResource(R.drawable.ic_repeat_white_circle);
+
+                repeat = true;
+            } else {
+                imgrepeat.setImageResource(R.drawable.ic_repeat);
+                repeat = false;
             }
         });
-        imgrandom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkrandom == false) {
-                    if (repeat == true) {
-                        repeat = false;
-                        imgrandom.setImageResource(R.drawable.ic_app_shortcut_shuffle_all);
-                        imgrepeat.setImageResource(R.drawable.ic_repeat);
-                    }
+        imgrandom.setOnClickListener(v -> {
+            if (checkrandom == false) {
+                if (repeat == true) {
+                    repeat = false;
                     imgrandom.setImageResource(R.drawable.ic_app_shortcut_shuffle_all);
-                    checkrandom = true;
-                } else {
-                    imgrandom.setImageResource(R.drawable.ic_shuffle);
-                    checkrandom = false;
+                    imgrepeat.setImageResource(R.drawable.ic_repeat);
                 }
+                imgrandom.setImageResource(R.drawable.ic_app_shortcut_shuffle_all);
+                checkrandom = true;
+            } else {
+                imgrandom.setImageResource(R.drawable.ic_shuffle);
+                checkrandom = false;
             }
         });
         sktime.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -193,7 +284,7 @@ public class PlayNhacActivity extends AppCompatActivity {
                         imgrepeat.setClickable(true);
                         imgnext.setClickable(true);
                     }
-                }, 5000);
+                }, 2000);
             }
         });
         imgpre.setOnClickListener(new View.OnClickListener() {
@@ -239,10 +330,11 @@ public class PlayNhacActivity extends AppCompatActivity {
                         imgrepeat.setClickable(true);
                         imgpre.setClickable(true);
                     }
-                }, 5000);
+                }, 2000);
             }
         });
     }
+
 
     private void getDataFromIntent() {
         Intent intent = getIntent();
@@ -250,13 +342,18 @@ public class PlayNhacActivity extends AppCompatActivity {
             if (intent.hasExtra("song")) {
                 Bundle bundle = intent.getExtras();
                 Songs songs = bundle.getParcelable("song");
-                songArrayList.add(songs);
+                if (songArrayList!=null){
+                    songArrayList.clear();
+                    songArrayList.add(songs);
+                }
             }
             if (intent.hasExtra("listsong")) {
                 Bundle bundle = intent.getExtras();
                 ArrayList<Songs> listsong = bundle.getParcelableArrayList("listsong");
-                songArrayList = listsong;
-
+                if (songArrayList!=null){
+                    songArrayList.clear();
+                    songArrayList = listsong;
+                }
             }
         }
 
@@ -273,15 +370,11 @@ public class PlayNhacActivity extends AppCompatActivity {
         imgrandom = findViewById(R.id.imageButtonrandom);
         imgpre = findViewById(R.id.imageButtonpreview);
         imgnext = findViewById(R.id.imageButtonnext);
+        imgtimplaynhac = findViewById(R.id.imageViewtimplaynhac);
+        imgtimborder = findViewById(R.id.icon_tim_border);
         imgrepeat = findViewById(R.id.imageButtonlap);
         viewPagerplay = findViewById(R.id.viewPagerdianhac);
-        setSupportActionBar(toolbarplay);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbarplay.setNavigationOnClickListener(v -> {
-            finish();
-            mediaPlayer.stop();
-            songArrayList.clear();
-        });
+        relativeLayout = findViewById(R.id.mainPlay);
         toolbarplay.setTitleTextColor(Color.BLACK);
         fragmentDiscography = new FragmentDiscography();
         fragmentPlayListSong = new FragmentPlayListSong();
@@ -293,15 +386,41 @@ public class PlayNhacActivity extends AppCompatActivity {
         if (songArrayList.size() > 0) {
             txtTencasi.setText(songArrayList.get(position).getCasi());
             txtTenbaihat.setText(songArrayList.get(position).getTenBaiHat());
-            new PlayMp3().execute(songArrayList.get(0).getLinkBaiHat());
             imgplay.setImageResource(R.drawable.ic_pause_white_64dp);
+            new PlayMp3().execute(songArrayList.get(0).getLinkBaiHat());
+//            new Thread(() -> {
+//                try {
+//                    mediaPlayer = new MediaPlayer();
+//                    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+//                    mediaPlayer.setOnCompletionListener(mp -> {
+//                        mp.stop();
+//                        mp.reset();
+//                    });
+//                    mediaPlayer.setDataSource(songArrayList.get(0).getLinkBaiHat());
+//                    mediaPlayer.prepare();
+//                } catch (IOException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                mediaPlayer.start();
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        TimeSong();
+//                        updateTime();
+//                    }
+//                });
+//
+//
+//            }).start();
         }
     }
 
-    class PlayMp3 extends AsyncTask<String, Void, String> {
+
+    public class PlayMp3 extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... strings) {
+
             return strings[0];
         }
 
@@ -311,13 +430,9 @@ public class PlayNhacActivity extends AppCompatActivity {
             try {
                 mediaPlayer = new MediaPlayer();
                 mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-
-                        mediaPlayer.stop();
-                        mediaPlayer.reset();
-                    }
+                mediaPlayer.setOnCompletionListener(mp -> {
+                    mp.stop();
+                    mp.reset();
                 });
                 mediaPlayer.setDataSource(song);
                 mediaPlayer.prepare();
@@ -326,6 +441,8 @@ public class PlayNhacActivity extends AppCompatActivity {
             }
             mediaPlayer.start();
             TimeSong();
+            updateTime();
+
         }
     }
 

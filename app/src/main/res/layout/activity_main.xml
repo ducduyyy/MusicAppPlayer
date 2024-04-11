@@ -14,7 +14,11 @@
         android:background="@drawable/custom_backgrounds"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_weight="1" >
+
+    </androidx.viewpager.widget.ViewPager>
+
+
 
 
     <com.google.android.material.tabs.TabLayout
