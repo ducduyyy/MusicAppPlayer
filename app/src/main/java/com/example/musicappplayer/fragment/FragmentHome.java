@@ -82,12 +82,7 @@ public class FragmentHome extends Fragment {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if (query.equals("")){
-                    recyclerViewsearchbaihat.setVisibility(View.GONE);
-                }
                 SearchTuKhoaBaiHat(query);
-                menuItem.collapseActionView();
-                getActivity().invalidateOptionsMenu();
                 return true;
 
             }

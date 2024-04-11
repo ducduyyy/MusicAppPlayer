@@ -77,11 +77,11 @@ public class PlayNhacActivity extends AppCompatActivity {
     ViewPagerPlaySong viewPagerPlaySong;
     FragmentDiscography fragmentDiscography;
     FragmentPlayListSong fragmentPlayListSong;
-    public static MediaPlayer mediaPlayer;
+    static MediaPlayer mediaPlayer;
     int position = 0;
     boolean repeat = false, checkrandom = false, next = false;
 
-    public static PlayMp3 playMp3;
+    static PlayMp3 playMp3;
 
     Context context = this;
 
@@ -98,7 +98,6 @@ public class PlayNhacActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
         if (mediaPlayer!=null){
             mediaPlayer.stop();
             mediaPlayer.release();
@@ -108,8 +107,6 @@ public class PlayNhacActivity extends AppCompatActivity {
         mapping();
         updateTime();
         eventClick();
-
-
     }
 
     private void eventClick() {
@@ -128,27 +125,18 @@ public class PlayNhacActivity extends AppCompatActivity {
                         txtTencasi.setText(songArrayList.get(0).getCasi());
                         handler.removeCallbacks(this);
                     } else {
-                        handler.postDelayed(this, 300);
+                        handler.postDelayed(this, 500);
                     }
                 }
             }
 
         }, 100);
-
-
-        imgplay.setOnClickListener(v -> {
-            if (mediaPlayer.isPlaying()) {
-                mediaPlayer.pause();
-                isMusicPlaying=false;
-                imgplay.setImageResource(R.drawable.ic_play_arrow_white_64dp);
-            } else {
-                mediaPlayer.start();
-                imgplay.setImageResource(R.drawable.ic_pause_white_64dp);
-
-        }, 500);
         imgtimplaynhac.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("test", "onClick: "+imgtimplaynhac.getDrawable().getConstantState().toString());
+                Log.d("test", "onClick: "+context.getDrawable(R.drawable.ic_favorite_border).getConstantState().toString());
+
                 if(imgtimplaynhac.getDrawable().getConstantState().equals(context.getDrawable(R.drawable.ic_favorite_border).getConstantState())){
                     imgtimplaynhac.setImageResource(R.drawable.icon_love_red);
                     Dataservice dataservice = APIService.getService();
@@ -330,22 +318,6 @@ public class PlayNhacActivity extends AppCompatActivity {
                         fragmentDiscography.PlayNhac(songArrayList.get(position).getHinhBaiHat());
                         txtTencasi.setText(songArrayList.get(position).getCasi());
                         txtTenbaihat.setText(songArrayList.get(position).getTenBaiHat());
-//                        Picasso.get().load(songArrayList.get(position).getHinhBaiHat()).into(new Target() {
-//                            @Override
-//                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-//                                Drawable drawable = new BitmapDrawable(getResources(), bitmap);
-//                                relativeLayout.setBackground(drawable);
-//                            }
-//
-//                            @Override
-//                            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
-//                            }
-//
-//                            @Override
-//                            public void onPrepareLoad(Drawable placeHolderDrawable) {
-//
-//                            }
-//                        });
                         updateTime();
                     }
                 }
@@ -362,6 +334,7 @@ public class PlayNhacActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void getDataFromIntent() {
         Intent intent = getIntent();
@@ -414,7 +387,6 @@ public class PlayNhacActivity extends AppCompatActivity {
             txtTencasi.setText(songArrayList.get(position).getCasi());
             txtTenbaihat.setText(songArrayList.get(position).getTenBaiHat());
             imgplay.setImageResource(R.drawable.ic_pause_white_64dp);
-
             new PlayMp3().execute(songArrayList.get(0).getLinkBaiHat());
 //            new Thread(() -> {
 //                try {
@@ -468,7 +440,6 @@ public class PlayNhacActivity extends AppCompatActivity {
                 throw new RuntimeException(e);
             }
             mediaPlayer.start();
-            isMusicPlaying = true;
             TimeSong();
             updateTime();
 
