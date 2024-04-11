@@ -4,7 +4,8 @@
     android:height="24dp"
     android:name="heartbreak"
     android:viewportWidth="56"
-    android:viewportHeight="56">
+    android:viewportHeight="56"
+    android:id="@+id/icon_tim_border">
     <group
         android:name="group"
         android:pivotX="28"

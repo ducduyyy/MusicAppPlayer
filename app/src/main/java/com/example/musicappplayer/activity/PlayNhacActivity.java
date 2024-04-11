@@ -1,8 +1,12 @@
 package com.example.musicappplayer.activity;
 
+import static androidx.compose.ui.tooling.data.SlotTreeKt.getPosition;
+
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
@@ -11,12 +15,15 @@ import android.os.Handler;
 import android.os.StrictMode;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -27,11 +34,17 @@ import com.example.musicappplayer.adapter.ViewPagerPlaySong;
 import com.example.musicappplayer.fragment.FragmentDiscography;
 import com.example.musicappplayer.fragment.FragmentPlayListSong;
 import com.example.musicappplayer.model.Songs;
+import com.example.musicappplayer.service.APIService;
+import com.example.musicappplayer.service.Dataservice;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Random;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PlayNhacActivity extends AppCompatActivity {
 
@@ -40,6 +53,7 @@ public class PlayNhacActivity extends AppCompatActivity {
     SeekBar sktime;
     ImageButton imgplay, imgrepeat, imgnext, imgpre, imgrandom;
     ViewPager viewPagerplay;
+    ImageView imgtimplaynhac,imgtimborder;
     public static ArrayList<Songs> songArrayList = new ArrayList<>();
     public static ViewPagerPlaySong viewPagerPlaySong;
     FragmentDiscography fragmentDiscography;
@@ -47,6 +61,7 @@ public class PlayNhacActivity extends AppCompatActivity {
     MediaPlayer mediaPlayer;
     int position = 0;
     boolean repeat = false, checkrandom = false, next = false;
+    Context context = this;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -84,6 +99,53 @@ public class PlayNhacActivity extends AppCompatActivity {
                 }
             }
         }, 500);
+        imgtimplaynhac.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(imgtimplaynhac.getDrawable().getConstantState().equals(context.getDrawable(R.drawable.ic_favorite_border).getConstantState())){
+                    imgtimplaynhac.setImageResource(R.drawable.icon_love_red);
+                    Dataservice dataservice = APIService.getService();
+                    Call<String> callback = dataservice.UpdateLuotThich("1", songArrayList.get(0).getIdBaiHat());
+                    callback.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            String ketqua = response.body();
+                            if(ketqua.equals("Success")){
+                                Toast.makeText(context, "Đã thích", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(context, "Lỗi!!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+
+                        }
+                    });
+                }else {
+                    imgtimplaynhac.setImageResource(R.drawable.ic_favorite_border);
+                    Dataservice dataservice = APIService.getService();
+                    Call<String> callback = dataservice.UpdateLuotThich("-1", songArrayList.get(0).getIdBaiHat());
+                    callback.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            String ketqua = response.body();
+                            if(ketqua.equals("Success")){
+                                Toast.makeText(context, "Đã bỏ thích", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Toast.makeText(context, "Lỗi!!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+
+                        }
+                    });
+                }
+
+            }
+        });
         imgplay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -273,6 +335,8 @@ public class PlayNhacActivity extends AppCompatActivity {
         imgrandom = findViewById(R.id.imageButtonrandom);
         imgpre = findViewById(R.id.imageButtonpreview);
         imgnext = findViewById(R.id.imageButtonnext);
+        imgtimplaynhac = findViewById(R.id.imageViewtimplaynhac);
+        imgtimborder = findViewById(R.id.icon_tim_border);
         imgrepeat = findViewById(R.id.imageButtonlap);
         viewPagerplay = findViewById(R.id.viewPagerdianhac);
         setSupportActionBar(toolbarplay);
