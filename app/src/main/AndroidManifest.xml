@@ -41,9 +41,7 @@
         <activity
             android:name=".activity.PlayNhacActivity"
             android:exported="false" />
-        <activity
-            android:name=".activity.SearchActivity"
-            android:exported="false" />
+    
         <activity
             android:name=".activity.DanhsachtatcaAlbumActivity"
             android:exported="false" />

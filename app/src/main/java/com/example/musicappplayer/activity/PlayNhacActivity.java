@@ -3,24 +3,38 @@ package com.example.musicappplayer.activity;
 import static androidx.compose.ui.tooling.data.SlotTreeKt.getPosition;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+
 import android.content.Context;
+
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+
+import android.graphics.drawable.BitmapDrawable;
+
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
+
 import android.widget.ImageView;
+
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -34,6 +48,10 @@ import com.example.musicappplayer.adapter.ViewPagerPlaySong;
 import com.example.musicappplayer.fragment.FragmentDiscography;
 import com.example.musicappplayer.fragment.FragmentPlayListSong;
 import com.example.musicappplayer.model.Songs;
+
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
 import com.example.musicappplayer.service.APIService;
 import com.example.musicappplayer.service.Dataservice;
 
@@ -50,17 +68,21 @@ public class PlayNhacActivity extends AppCompatActivity {
 
     Toolbar toolbarplay;
     TextView txttimesong, txtTotaltimesong, txtTencasi, txtTenbaihat;
+    RelativeLayout relativeLayout;
     SeekBar sktime;
     ImageButton imgplay, imgrepeat, imgnext, imgpre, imgrandom;
     ViewPager viewPagerplay;
     ImageView imgtimplaynhac,imgtimborder;
     public static ArrayList<Songs> songArrayList = new ArrayList<>();
-    public static ViewPagerPlaySong viewPagerPlaySong;
+    ViewPagerPlaySong viewPagerPlaySong;
     FragmentDiscography fragmentDiscography;
     FragmentPlayListSong fragmentPlayListSong;
-    MediaPlayer mediaPlayer;
+    public static MediaPlayer mediaPlayer;
     int position = 0;
     boolean repeat = false, checkrandom = false, next = false;
+
+    public static PlayMp3 playMp3;
+
     Context context = this;
 
     @SuppressLint("MissingInflatedId")
@@ -76,14 +98,26 @@ public class PlayNhacActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        if (mediaPlayer!=null){
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer=null;
+        }
         getDataFromIntent();
         mapping();
         updateTime();
         eventClick();
 
+
     }
 
     private void eventClick() {
+        setSupportActionBar(toolbarplay);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbarplay.setNavigationOnClickListener(v -> {
+            finish();
+        });
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -98,6 +132,19 @@ public class PlayNhacActivity extends AppCompatActivity {
                     }
                 }
             }
+
+        }, 100);
+
+
+        imgplay.setOnClickListener(v -> {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.pause();
+                isMusicPlaying=false;
+                imgplay.setImageResource(R.drawable.ic_play_arrow_white_64dp);
+            } else {
+                mediaPlayer.start();
+                imgplay.setImageResource(R.drawable.ic_pause_white_64dp);
+
         }, 500);
         imgtimplaynhac.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,39 +205,33 @@ public class PlayNhacActivity extends AppCompatActivity {
                 }
             }
         });
-        imgrepeat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (repeat == false) {
-                    if (checkrandom == true) {
-                        checkrandom = false;
-                        imgrandom.setImageResource(R.drawable.ic_shuffle);
-                        imgrepeat.setImageResource(R.drawable.ic_repeat_white_circle);
-                    }
+        imgrepeat.setOnClickListener(v -> {
+            if (!repeat) {
+                if (checkrandom == true) {
+                    checkrandom = false;
+                    imgrandom.setImageResource(R.drawable.ic_shuffle);
                     imgrepeat.setImageResource(R.drawable.ic_repeat_white_circle);
-
-                    repeat = true;
-                } else {
-                    imgrepeat.setImageResource(R.drawable.ic_repeat);
-                    repeat = false;
                 }
+                imgrepeat.setImageResource(R.drawable.ic_repeat_white_circle);
+
+                repeat = true;
+            } else {
+                imgrepeat.setImageResource(R.drawable.ic_repeat);
+                repeat = false;
             }
         });
-        imgrandom.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (checkrandom == false) {
-                    if (repeat == true) {
-                        repeat = false;
-                        imgrandom.setImageResource(R.drawable.ic_app_shortcut_shuffle_all);
-                        imgrepeat.setImageResource(R.drawable.ic_repeat);
-                    }
+        imgrandom.setOnClickListener(v -> {
+            if (checkrandom == false) {
+                if (repeat == true) {
+                    repeat = false;
                     imgrandom.setImageResource(R.drawable.ic_app_shortcut_shuffle_all);
-                    checkrandom = true;
-                } else {
-                    imgrandom.setImageResource(R.drawable.ic_shuffle);
-                    checkrandom = false;
+                    imgrepeat.setImageResource(R.drawable.ic_repeat);
                 }
+                imgrandom.setImageResource(R.drawable.ic_app_shortcut_shuffle_all);
+                checkrandom = true;
+            } else {
+                imgrandom.setImageResource(R.drawable.ic_shuffle);
+                checkrandom = false;
             }
         });
         sktime.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -255,7 +296,7 @@ public class PlayNhacActivity extends AppCompatActivity {
                         imgrepeat.setClickable(true);
                         imgnext.setClickable(true);
                     }
-                }, 5000);
+                }, 2000);
             }
         });
         imgpre.setOnClickListener(new View.OnClickListener() {
@@ -289,6 +330,22 @@ public class PlayNhacActivity extends AppCompatActivity {
                         fragmentDiscography.PlayNhac(songArrayList.get(position).getHinhBaiHat());
                         txtTencasi.setText(songArrayList.get(position).getCasi());
                         txtTenbaihat.setText(songArrayList.get(position).getTenBaiHat());
+//                        Picasso.get().load(songArrayList.get(position).getHinhBaiHat()).into(new Target() {
+//                            @Override
+//                            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+//                                Drawable drawable = new BitmapDrawable(getResources(), bitmap);
+//                                relativeLayout.setBackground(drawable);
+//                            }
+//
+//                            @Override
+//                            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+//                            }
+//
+//                            @Override
+//                            public void onPrepareLoad(Drawable placeHolderDrawable) {
+//
+//                            }
+//                        });
                         updateTime();
                     }
                 }
@@ -301,7 +358,7 @@ public class PlayNhacActivity extends AppCompatActivity {
                         imgrepeat.setClickable(true);
                         imgpre.setClickable(true);
                     }
-                }, 5000);
+                }, 2000);
             }
         });
     }
@@ -312,13 +369,18 @@ public class PlayNhacActivity extends AppCompatActivity {
             if (intent.hasExtra("song")) {
                 Bundle bundle = intent.getExtras();
                 Songs songs = bundle.getParcelable("song");
-                songArrayList.add(songs);
+                if (songArrayList!=null){
+                    songArrayList.clear();
+                    songArrayList.add(songs);
+                }
             }
             if (intent.hasExtra("listsong")) {
                 Bundle bundle = intent.getExtras();
                 ArrayList<Songs> listsong = bundle.getParcelableArrayList("listsong");
-                songArrayList = listsong;
-
+                if (songArrayList!=null){
+                    songArrayList.clear();
+                    songArrayList = listsong;
+                }
             }
         }
 
@@ -339,13 +401,7 @@ public class PlayNhacActivity extends AppCompatActivity {
         imgtimborder = findViewById(R.id.icon_tim_border);
         imgrepeat = findViewById(R.id.imageButtonlap);
         viewPagerplay = findViewById(R.id.viewPagerdianhac);
-        setSupportActionBar(toolbarplay);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbarplay.setNavigationOnClickListener(v -> {
-            finish();
-            mediaPlayer.stop();
-            songArrayList.clear();
-        });
+        relativeLayout = findViewById(R.id.mainPlay);
         toolbarplay.setTitleTextColor(Color.BLACK);
         fragmentDiscography = new FragmentDiscography();
         fragmentPlayListSong = new FragmentPlayListSong();
@@ -357,15 +413,42 @@ public class PlayNhacActivity extends AppCompatActivity {
         if (songArrayList.size() > 0) {
             txtTencasi.setText(songArrayList.get(position).getCasi());
             txtTenbaihat.setText(songArrayList.get(position).getTenBaiHat());
-            new PlayMp3().execute(songArrayList.get(0).getLinkBaiHat());
             imgplay.setImageResource(R.drawable.ic_pause_white_64dp);
+
+            new PlayMp3().execute(songArrayList.get(0).getLinkBaiHat());
+//            new Thread(() -> {
+//                try {
+//                    mediaPlayer = new MediaPlayer();
+//                    mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+//                    mediaPlayer.setOnCompletionListener(mp -> {
+//                        mp.stop();
+//                        mp.reset();
+//                    });
+//                    mediaPlayer.setDataSource(songArrayList.get(0).getLinkBaiHat());
+//                    mediaPlayer.prepare();
+//                } catch (IOException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                mediaPlayer.start();
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        TimeSong();
+//                        updateTime();
+//                    }
+//                });
+//
+//
+//            }).start();
         }
     }
 
-    class PlayMp3 extends AsyncTask<String, Void, String> {
+
+    public class PlayMp3 extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... strings) {
+
             return strings[0];
         }
 
@@ -375,13 +458,9 @@ public class PlayNhacActivity extends AppCompatActivity {
             try {
                 mediaPlayer = new MediaPlayer();
                 mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                    @Override
-                    public void onCompletion(MediaPlayer mp) {
-
-                        mediaPlayer.stop();
-                        mediaPlayer.reset();
-                    }
+                mediaPlayer.setOnCompletionListener(mp -> {
+                    mp.stop();
+                    mp.reset();
                 });
                 mediaPlayer.setDataSource(song);
                 mediaPlayer.prepare();
@@ -389,7 +468,10 @@ public class PlayNhacActivity extends AppCompatActivity {
                 throw new RuntimeException(e);
             }
             mediaPlayer.start();
+            isMusicPlaying = true;
             TimeSong();
+            updateTime();
+
         }
     }
 

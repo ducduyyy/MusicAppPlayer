@@ -46,24 +46,28 @@
                 </androidx.appcompat.widget.Toolbar>
             </com.google.android.material.appbar.AppBarLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/relativetimkiem"
+                android:background="@drawable/custom_backgrounds"
+                android:layout_below="@+id/appbarlayoutsearchbaihat1">
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_below="@+id/appbarlayoutsearchbaihat1"
                 android:layout_gravity="bottom"
                 android:id="@+id/recyclelerviewsearchbaihat1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior">
-            </androidx.recyclerview.widget.RecyclerView>
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
             <TextView
                 android:visibility="gone"
-                android:textColor="#f20"
-                android:gravity="center"
+                android:textColor="@color/Gray"
                 android:text="Khong co du lieu"
                 android:id="@+id/textviewkhongcodulieu1"
-                android:textSize="35sp"
+                android:textSize="20sp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            </TextView>
+                android:layout_height="match_parent"/>
+            </RelativeLayout>
         </RelativeLayout>
 
 

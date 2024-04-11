@@ -42,6 +42,9 @@ public class FragmentHome extends Fragment {
     RecyclerView recyclerViewsearchbaihat;
     TextView txtkhongcodulieu;
     SearchBaiHatAdapter searchBaiHatAdapter;
+
+    private boolean isSearchViewExpanded = false;
+
     MenuItem menuItem;
     ImageButton imageButton;
     int dem;
@@ -67,13 +70,16 @@ public class FragmentHome extends Fragment {
         return view;
     }
 
+
         @Override
     public void onCreateOptionsMenu(@androidx.annotation.NonNull Menu menu, @androidx.annotation.NonNull MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.search_view2,menu);
         menuItem = menu.findItem(R.id.menu_search2);
         SearchView searchView = (SearchView) menuItem.getActionView();
         searchView.setMaxWidth(Integer.MAX_VALUE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
             @Override
             public boolean onQueryTextSubmit(String query) {
                 if (query.equals("")){
@@ -85,14 +91,15 @@ public class FragmentHome extends Fragment {
                 return true;
 
             }
-
             @Override
             public boolean onQueryTextChange(String newText) {
+                if (newText.isEmpty()){
+                    recyclerViewsearchbaihat.setVisibility(View.GONE);
+                    txtkhongcodulieu.setVisibility(View.GONE);
+                }
                 return false;
             }
         });
-
-        super.onCreateOptionsMenu(menu, inflater);
     }
 
     private void SearchTuKhoaBaiHat(String query){
@@ -121,5 +128,11 @@ public class FragmentHome extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().invalidateOptionsMenu();
     }
 }

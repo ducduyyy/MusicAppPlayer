@@ -118,8 +118,6 @@ public class UserProfileActivity extends AppCompatActivity {
         });
     }
     //create actionBar Menu
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.common_menu,menu);
@@ -140,6 +138,7 @@ public class UserProfileActivity extends AppCompatActivity {
         } else if (id==R.id.menu_change_password) {
             Intent intent = new Intent(UserProfileActivity.this,ChangePasswordActivity.class);
             startActivity(intent);
+            finish();
         } else if (id == R.id.menu_logout) {
             firebaseAuth.signOut();
             Toast.makeText(UserProfileActivity.this, "Logged Out", Toast.LENGTH_LONG).show();

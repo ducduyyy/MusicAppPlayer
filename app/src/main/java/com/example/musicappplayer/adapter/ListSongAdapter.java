@@ -160,6 +160,7 @@ public class ListSongAdapter extends RecyclerView.Adapter<ListSongAdapter.ViewHo
                     context.startActivity(intent);
                 }
             });
+
         }
     }
 }

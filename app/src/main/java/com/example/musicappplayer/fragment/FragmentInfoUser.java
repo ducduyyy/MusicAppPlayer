@@ -32,8 +32,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class FragmentInfoUser extends Fragment {
     View view;
-    LinearLayout linearLayout_welcome, linearLayout_dangxuat;
-    TextView txtname,txtdangxuat;
+    LinearLayout linearLayout_welcome;
+    TextView txtname;
     CircleImageView imageView;
 
     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -45,7 +45,6 @@ public class FragmentInfoUser extends Fragment {
         linearLayout_welcome = view.findViewById(R.id.linear_welcome);
         txtname = view.findViewById(R.id.textview_name);
         imageView = view.findViewById(R.id.img_info_user);
-        txtdangxuat = view.findViewById(R.id.textview_dangxuat);
         Log.d("create", "onCreateView ");
         firebaseUser = firebaseAuth.getCurrentUser();
         linearLayout_welcome.setOnClickListener(new View.OnClickListener() {
@@ -77,29 +76,6 @@ public class FragmentInfoUser extends Fragment {
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
                 }
-            }
-        });
-        txtdangxuat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Thông báo")
-                        .setMessage("Bạn có chắc chắn muốn đăng xuất?")
-                        .setPositiveButton("Đăng xuất", (dialog, which) -> {
-                            firebaseAuth.signOut();
-                            onResume();
-                            Toast.makeText(getActivity(), "Đã đăng xuất!", Toast.LENGTH_SHORT).show();
-                            dialog.dismiss();
-
-                        })
-                        .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
             }
         });
         return view;
