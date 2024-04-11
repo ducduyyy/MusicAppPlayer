@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/custom_backgrounds">
+
+
+        <RelativeLayout
+            android:id="@+id/relativesonghistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/Black"
+                android:id="@+id/textviewtitlesonghistory"
+                android:text="Lịch Sử Nghe"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/relativesonghistory"
+            android:id="@+id/recyclelersonghistory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+</RelativeLayout>
+
+

@@ -38,7 +38,7 @@ public class ListPlaylistAdapter extends RecyclerView.Adapter<ListPlaylistAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Playlist playlist = mangplaylist.get(position);
-        Picasso.get().load(playlist.getHinhNen()).into(holder.imageViewlistplaylist);
+        Picasso.get().load(playlist.getHinhNen()).into(holder.  imageViewlistplaylist);
         holder.txtplaylistname.setText(playlist.getTen());
     }
 
