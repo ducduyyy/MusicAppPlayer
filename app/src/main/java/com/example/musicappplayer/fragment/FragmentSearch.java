@@ -24,6 +24,8 @@ import com.example.musicappplayer.adapter.SearchBaiHatAdapter;
 import com.example.musicappplayer.model.Songs;
 import com.example.musicappplayer.service.APIService;
 import com.example.musicappplayer.service.Dataservice;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,8 @@ public class FragmentSearch extends Fragment {
     RecyclerView recyclerViewsearchbaihat;
     TextView txtkhongcodulieu;
     SearchBaiHatAdapter searchBaiHatAdapter;
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
     @Nullable
     @Override
     public View onCreateView(@NonNull @androidx.annotation.NonNull LayoutInflater inflater, @Nullable @androidx.annotation.Nullable ViewGroup container, @Nullable @androidx.annotation.Nullable Bundle savedInstanceState) {
@@ -98,5 +102,11 @@ public class FragmentSearch extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        firebaseUser = firebaseAuth.getCurrentUser();
     }
 }

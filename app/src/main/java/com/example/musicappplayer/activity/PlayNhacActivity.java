@@ -7,8 +7,10 @@ import android.app.Activity;
 
 import android.content.Context;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 
 import android.graphics.drawable.BitmapDrawable;
@@ -35,6 +37,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -49,6 +52,8 @@ import com.example.musicappplayer.fragment.FragmentDiscography;
 import com.example.musicappplayer.fragment.FragmentPlayListSong;
 import com.example.musicappplayer.model.Songs;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -65,6 +70,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PlayNhacActivity extends AppCompatActivity {
+    private MusicNotificationHelper musicNotificationHelper;
 
     Toolbar toolbarplay;
     TextView txttimesong, txtTotaltimesong, txtTencasi, txtTenbaihat;
@@ -84,6 +90,8 @@ public class PlayNhacActivity extends AppCompatActivity {
     static PlayMp3 playMp3;
 
     Context context = this;
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -136,48 +144,73 @@ public class PlayNhacActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d("test", "onClick: "+imgtimplaynhac.getDrawable().getConstantState().toString());
                 Log.d("test", "onClick: "+context.getDrawable(R.drawable.ic_favorite_border).getConstantState().toString());
-
-                if(imgtimplaynhac.getDrawable().getConstantState().equals(context.getDrawable(R.drawable.ic_favorite_border).getConstantState())){
-                    imgtimplaynhac.setImageResource(R.drawable.icon_love_red);
-                    Dataservice dataservice = APIService.getService();
-                    Call<String> callback = dataservice.UpdateLuotThich("1", songArrayList.get(0).getIdBaiHat());
-                    callback.enqueue(new Callback<String>() {
-                        @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
-                            String ketqua = response.body();
-                            if(ketqua.equals("Success")){
-                                Toast.makeText(context, "Đã thích", Toast.LENGTH_SHORT).show();
-                            }else{
-                                Toast.makeText(context, "Lỗi!!", Toast.LENGTH_SHORT).show();
+                if (firebaseUser!=null){
+                    if(imgtimplaynhac.getDrawable().getConstantState().equals(context.getDrawable(R.drawable.ic_favorite_border).getConstantState())){
+                        imgtimplaynhac.setImageResource(R.drawable.icon_love_red);
+                        Dataservice dataservice = APIService.getService();
+                        Call<String> callback = dataservice.UpdateLuotThich("1", songArrayList.get(0).getIdBaiHat());
+                        callback.enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                String ketqua = response.body();
+                                if(ketqua.equals("Success")){
+                                    Toast.makeText(context, "Đã thích", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(context, "Lỗi!!", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onFailure(Call<String> call, Throwable t) {
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
 
-                        }
-                    });
+                            }
+                        });
+                    }else {
+                        imgtimplaynhac.setImageResource(R.drawable.ic_favorite_border);
+                        Dataservice dataservice = APIService.getService();
+                        Call<String> callback = dataservice.UpdateLuotThich("-1", songArrayList.get(0).getIdBaiHat());
+                        callback.enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                String ketqua = response.body();
+                                if(ketqua.equals("Success")){
+                                    Toast.makeText(context, "Đã bỏ thích", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(context, "Lỗi!!", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
+
+                            }
+                        });
+                    }
                 }else {
-                    imgtimplaynhac.setImageResource(R.drawable.ic_favorite_border);
-                    Dataservice dataservice = APIService.getService();
-                    Call<String> callback = dataservice.UpdateLuotThich("-1", songArrayList.get(0).getIdBaiHat());
-                    callback.enqueue(new Callback<String>() {
-                        @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
-                            String ketqua = response.body();
-                            if(ketqua.equals("Success")){
-                                Toast.makeText(context, "Đã bỏ thích", Toast.LENGTH_SHORT).show();
-                            }else{
-                                Toast.makeText(context, "Lỗi!!", Toast.LENGTH_SHORT).show();
-                            }
-                        }
+                    // Người dùng chưa đăng nhập, hiển thị thông báo yêu cầu đăng nhập
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Thông báo")
+                            .setMessage("Bạn chưa đăng nhập. Vui lòng đăng nhập để tiếp tục.")
+                            .setPositiveButton("Đăng nhập", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // Chuyển hướng người dùng đến màn hình đăng nhập
+                                    startActivity(new Intent(context, SignInActivity.class));
+                                }
+                            })
+                            .setNegativeButton("Thoát", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // Xử lý khi người dùng chọn thoát
+                                    dialog.dismiss();
 
-                        @Override
-                        public void onFailure(Call<String> call, Throwable t) {
-
-                        }
-                    });
+                                }
+                            });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
                 }
+
+
 
             }
         });
@@ -523,4 +556,9 @@ public class PlayNhacActivity extends AppCompatActivity {
         }, 1000);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        firebaseUser = firebaseAuth.getCurrentUser();
+    }
 }
