@@ -1,6 +1,7 @@
 package com.example.musicappplayer.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.util.Log;
@@ -13,18 +14,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.musicappplayer.R;
 import com.example.musicappplayer.activity.PlayNhacActivity;
+import com.example.musicappplayer.activity.SignInActivity;
 import com.example.musicappplayer.model.Songs;
 import com.example.musicappplayer.service.APIService;
 import com.example.musicappplayer.service.Dataservice;
 
 import com.example.musicappplayer.model.Songs;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -36,6 +41,8 @@ import retrofit2.Response;
 public class SearchBaiHatAdapter extends  RecyclerView.Adapter<SearchBaiHatAdapter.ViewHolder> {
     Context context;
     ArrayList<Songs> mangbaihat;
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
     public SearchBaiHatAdapter(Context context, ArrayList<Songs> mangbaihat){
         this.context = context;
         this.mangbaihat = mangbaihat;
@@ -82,48 +89,71 @@ public class SearchBaiHatAdapter extends  RecyclerView.Adapter<SearchBaiHatAdapt
                 }
             });
             imgluotthich.setOnClickListener(v -> {
-                if(imgluotthich.getDrawable().getConstantState().equals(context.getDrawable(R.drawable.ic_favorite).getConstantState())){
-                    imgluotthich.setImageResource(R.drawable.icon_love_red);
-                    Dataservice dataservice = APIService.getService();
-                    Call<String> callback = dataservice.UpdateLuotThich("1", mangbaihat.get(getPosition()).getIdBaiHat());
-                    callback.enqueue(new Callback<String>() {
-                        @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
-                            String ketqua = response.body();
-                            if(ketqua.equals("Success")){
-                                Toast.makeText(context, "Đã thích", Toast.LENGTH_SHORT).show();
-                            }else{
-                                Toast.makeText(context, "Lỗi!!", Toast.LENGTH_SHORT).show();
+                if (firebaseUser!=null){
+                    if(imgluotthich.getDrawable().getConstantState().equals(context.getDrawable(R.drawable.ic_favorite).getConstantState())){
+                        imgluotthich.setImageResource(R.drawable.icon_love_red);
+                        Dataservice dataservice = APIService.getService();
+                        Call<String> callback = dataservice.UpdateLuotThich("1", mangbaihat.get(getPosition()).getIdBaiHat());
+                        callback.enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                String ketqua = response.body();
+                                if(ketqua.equals("Success")){
+                                    Toast.makeText(context, "Đã thích", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(context, "Lỗi!!", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onFailure(Call<String> call, Throwable t) {
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
 
-                        }
-                    });
+                            }
+                        });
+                    }else {
+                        imgluotthich.setImageResource(R.drawable.ic_favorite);
+                        Dataservice dataservice = APIService.getService();
+                        Call<String> callback = dataservice.UpdateLuotThich("-1", mangbaihat.get(getPosition()).getIdBaiHat());
+                        callback.enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                String ketqua = response.body();
+                                if(ketqua.equals("Success")){
+                                    Toast.makeText(context, "Đã bỏ thích", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(context, "Lỗi!!", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
+
+                            }
+                        });
+                    }
                 }else {
-                    imgluotthich.setImageResource(R.drawable.ic_favorite);
-                    Dataservice dataservice = APIService.getService();
-                    Call<String> callback = dataservice.UpdateLuotThich("-1", mangbaihat.get(getPosition()).getIdBaiHat());
-                    callback.enqueue(new Callback<String>() {
-                        @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
-                            String ketqua = response.body();
-                            if(ketqua.equals("Success")){
-                                Toast.makeText(context, "Đã bỏ thích", Toast.LENGTH_SHORT).show();
-                            }else{
-                                Toast.makeText(context, "Lỗi!!", Toast.LENGTH_SHORT).show();
-                            }
-                        }
+                    // Người dùng chưa đăng nhập, hiển thị thông báo yêu cầu đăng nhập
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle("Thông báo")
+                            .setMessage("Bạn chưa đăng nhập. Vui lòng đăng nhập để tiếp tục.")
+                            .setPositiveButton("Đăng nhập", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // Chuyển hướng người dùng đến màn hình đăng nhập
+                                    context.startActivity(new Intent(context, SignInActivity.class));
+                                }
+                            })
+                            .setNegativeButton("Thoát", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    // Xử lý khi người dùng chọn thoát
+                                    dialog.dismiss();
 
-                        @Override
-                        public void onFailure(Call<String> call, Throwable t) {
-
-                        }
-                    });
+                                }
+                            });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
                 }
-
             });
         }
     }

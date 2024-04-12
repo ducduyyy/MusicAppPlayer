@@ -40,16 +40,16 @@
             android:textSize="20sp"
             android:text="Ca sĩ"/>
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:id="@+id/imageviewluotthichlistsong"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="30dp"
             android:src="@drawable/ic_favorite"/>
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:id="@+id/imageviewdownloadsong"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"

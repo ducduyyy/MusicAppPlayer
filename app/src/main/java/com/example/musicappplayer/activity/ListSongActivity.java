@@ -34,6 +34,8 @@ import com.example.musicappplayer.service.APIService;
 import com.example.musicappplayer.service.Dataservice;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -58,6 +60,8 @@ public class ListSongActivity extends AppCompatActivity {
     Playlist playlist;
     TheLoai theLoai;
     Album album;
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -251,6 +255,12 @@ public class ListSongActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        firebaseUser = firebaseAuth.getCurrentUser();
 
     }
 }
