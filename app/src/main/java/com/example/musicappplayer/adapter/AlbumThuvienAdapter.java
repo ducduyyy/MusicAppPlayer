@@ -2,6 +2,7 @@ package com.example.musicappplayer.adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.musicappplayer.R;
+import com.example.musicappplayer.activity.ListSongActivity;
 import com.example.musicappplayer.model.Album;
 import com.example.musicappplayer.model.Songs;
 import com.squareup.picasso.Picasso;
@@ -58,6 +60,15 @@ public class AlbumThuvienAdapter extends RecyclerView.Adapter<AlbumThuvienAdapte
             imageviewalbumthuvien = itemView.findViewById(R.id.imageviewalbumthuvien);
             txtcasialbumthuvien = itemView.findViewById(R.id.textviewTenCaSialbumthuvien);
             txttenalbumthuvien = itemView.findViewById(R.id.textviewtenalbumthuvien);
+
+            itemView .setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ListSongActivity.class);
+                    intent.putExtra("album",songList.get(getPosition()));
+                    context.startActivity(intent);
+                }
+            });
         }
 
     }

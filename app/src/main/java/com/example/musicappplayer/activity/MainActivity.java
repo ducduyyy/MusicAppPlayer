@@ -93,12 +93,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkPermissions() {
+//        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
+//                ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//            // Yêu cầu cấp quyền từ người dùng
+//            ActivityCompat.requestPermissions(MainActivity.this,
+//                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
+//                    REQUEST_PERMISSION_CODE);
+//        }
         if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
                 ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            // Yêu cầu cấp quyền từ người dùng
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
-                    REQUEST_PERMISSION_CODE);
+
+            // Kiểm tra xem người dùng đã từ chối cấp quyền trước đó hay chưa
+            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
+                    ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+                // Hiển thị lời giải thích cho người dùng
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Yêu cầu quyền truy cập");
+                builder.setMessage("Ứng dụng cần truy cập vào file hệ thống để thực hiện các hoạt động chính. Vui lòng cấp quyền truy cập để tiếp tục.");
+                builder.setPositiveButton("Cấp quyền", (dialog, which) -> {
+                    // Yêu cầu cấp quyền từ người dùng
+                    ActivityCompat.requestPermissions(MainActivity.this,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
+                            REQUEST_PERMISSION_CODE);
+                });
+                builder.setNegativeButton("Thoát", (dialog, which) -> {
+                    finish();
+                });
+                builder.setCancelable(false);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+            } else {
+                // Yêu cầu cấp quyền từ người dùng
+                ActivityCompat.requestPermissions(MainActivity.this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
+                        REQUEST_PERMISSION_CODE);
+            }
         }
     }
     private void showPermissionDeniedDialog() {
@@ -145,8 +176,10 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Cấp quyền truy cập thành công!", Toast.LENGTH_SHORT).show();
             } else {
                 // Người dùng từ chối cấp quyền, xử lý tương ứng (ví dụ: hiển thị thông báo)
-                showPermissionDeniedDialog();
+//                showPermissionDeniedDialog();
+                checkPermissions();
             }
+
         }
 
 
