@@ -71,6 +71,7 @@ import retrofit2.Response;
 
 public class PlayNhacActivity extends AppCompatActivity {
 
+    static MusicNotificationHelper musicNotificationHelper;
 
     Toolbar toolbarplay;
     TextView txttimesong, txtTotaltimesong, txtTencasi, txtTenbaihat;
@@ -132,6 +133,7 @@ public class PlayNhacActivity extends AppCompatActivity {
                     if (songArrayList.size() > 0) {
                         fragmentDiscography.PlayNhac(songArrayList.get(0).getHinhBaiHat());
                         txtTencasi.setText(songArrayList.get(0).getCasi());
+                        Log.d("demo", "run: "+songArrayList.get(0).getTenBaiHat());
                         handler.removeCallbacks(this);
                     } else {
                         handler.postDelayed(this, 500);
@@ -422,6 +424,7 @@ public class PlayNhacActivity extends AppCompatActivity {
             txtTenbaihat.setText(songArrayList.get(position).getTenBaiHat());
             imgplay.setImageResource(R.drawable.ic_pause_white_64dp);
             new PlayMp3().execute(songArrayList.get(0).getLinkBaiHat());
+            Log.d("test1", "mapping: "+songArrayList.get(0).getTenBaiHat());
 //            new Thread(() -> {
 //                try {
 //                    mediaPlayer = new MediaPlayer();
