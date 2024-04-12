@@ -10,6 +10,7 @@ import android.os.Build;
 import androidx.core.app.NotificationCompat;
 
 import com.example.musicappplayer.R;
+import com.example.musicappplayer.model.Songs;
 
 public class MusicNotificationHelper {
     private static final String CHANNEL_ID = "music_channel";
@@ -29,12 +30,11 @@ public class MusicNotificationHelper {
         }
     }
 
-    public void showNotification(String title, String artist, Bitmap artwork) {
+    public void showNotification(String name, String casi) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(mContext, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_pause)
-                .setContentTitle(title)
-                .setContentText(artist)
-                .setLargeIcon(artwork)
+                .setContentTitle(name)
+                .setContentText(casi)
                 .setPriority(NotificationCompat.PRIORITY_LOW);
 
         Notification notification = builder.build();
