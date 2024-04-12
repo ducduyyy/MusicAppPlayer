@@ -1,18 +1,8 @@
 package com.example.musicappplayer.untils;
 
-import static android.content.ContentValues.TAG;
-import static androidx.activity.result.ActivityResultCallerKt.registerForActivityResult;
-import static androidx.browser.customtabs.CustomTabsClient.getPackageName;
-import static androidx.core.app.ActivityCompat.requestPermissions;
-import static androidx.core.app.ActivityCompat.startActivityForResult;
-import static androidx.core.content.ContextCompat.checkSelfPermission;
-import static androidx.core.content.ContextCompat.getSystemService;
-
 import android.Manifest;
 import android.app.Activity;
 import android.app.DownloadManager;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -20,33 +10,15 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Environment;
-import android.provider.Settings;
-import android.util.Log;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
 
-import com.example.musicappplayer.R;
-import com.example.musicappplayer.activity.ListSongActivity;
-import com.example.musicappplayer.activity.MainActivity;
 import com.example.musicappplayer.model.Songs;
-import com.example.musicappplayer.networks.CheckFileSize;
-import com.example.musicappplayer.networks.DownloadMusic;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Random;
 
 public class DownloadMusicManager {
 
@@ -55,9 +27,6 @@ public class DownloadMusicManager {
     public static final int REQUEST_PERMISSION_CODE = 10;
 
     public static Context context;
-
-    public DownloadMusicManager() {
-    }
 
     public DownloadMusicManager(Context context) {
         this.context = context;

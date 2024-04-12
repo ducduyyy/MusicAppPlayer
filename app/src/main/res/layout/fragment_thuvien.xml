@@ -33,6 +33,11 @@
 <!--        android:layout_height="match_parent"-->
 <!--        android:layout_below="@id/appBarLayoutSearchThuVienMusic"/>-->
         <fragment
+            android:name="com.example.musicappplayer.fragment.FragmentAlbumThuvien"
+            android:id="@+id/fragmentalbumthuvien"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <fragment
             android:name="com.example.musicappplayer.fragment.SongHistoryFragment"
             android:id="@+id/fragmentsonghistory"
             android:layout_width="match_parent"
