@@ -70,7 +70,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PlayNhacActivity extends AppCompatActivity {
-    private MusicNotificationHelper musicNotificationHelper;
+
 
     Toolbar toolbarplay;
     TextView txttimesong, txtTotaltimesong, txtTencasi, txtTenbaihat;
@@ -110,6 +110,7 @@ public class PlayNhacActivity extends AppCompatActivity {
             mediaPlayer.stop();
             mediaPlayer.release();
             mediaPlayer=null;
+
         }
         getDataFromIntent();
         mapping();

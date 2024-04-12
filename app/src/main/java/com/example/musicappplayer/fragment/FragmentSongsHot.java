@@ -16,6 +16,8 @@ import com.example.musicappplayer.adapter.SongHotAdapter;
 import com.example.musicappplayer.model.Songs;
 import com.example.musicappplayer.service.APIService;
 import com.example.musicappplayer.service.Dataservice;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,8 @@ public class FragmentSongsHot extends Fragment {
     View view;
     RecyclerView recyclerView;
     SongHotAdapter songHotAdapter;
+    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -35,6 +39,12 @@ public class FragmentSongsHot extends Fragment {
         getData();
         recyclerView = view.findViewById(R.id.recyclelerSongHot);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        firebaseUser = firebaseAuth.getCurrentUser();
     }
 
     private void getData() {
